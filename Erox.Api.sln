@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34728.123
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Erox.Api", "Erox.Api\Erox.Api.csproj", "{8B4E7F34-5F2B-446E-9EE2-8B04FB16BF28}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Erox.Domain", "Erox.Domain\Erox.Domain.csproj", "{574DE9EA-BCC2-47BF-B131-21192239F637}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Erox.Application", "Erox.Application\Erox.Application.csproj", "{79C0C194-D5EE-4031-ABF3-21118BA8E490}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Erox.DataAccess", "Erox.DataAccess\Erox.DataAccess.csproj", "{4A900788-7330-4443-B302-992556C2322F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8B4E7F34-5F2B-446E-9EE2-8B04FB16BF28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B4E7F34-5F2B-446E-9EE2-8B04FB16BF28}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B4E7F34-5F2B-446E-9EE2-8B04FB16BF28}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B4E7F34-5F2B-446E-9EE2-8B04FB16BF28}.Release|Any CPU.Build.0 = Release|Any CPU
+		{574DE9EA-BCC2-47BF-B131-21192239F637}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{574DE9EA-BCC2-47BF-B131-21192239F637}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{574DE9EA-BCC2-47BF-B131-21192239F637}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{574DE9EA-BCC2-47BF-B131-21192239F637}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79C0C194-D5EE-4031-ABF3-21118BA8E490}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79C0C194-D5EE-4031-ABF3-21118BA8E490}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79C0C194-D5EE-4031-ABF3-21118BA8E490}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79C0C194-D5EE-4031-ABF3-21118BA8E490}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A900788-7330-4443-B302-992556C2322F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A900788-7330-4443-B302-992556C2322F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A900788-7330-4443-B302-992556C2322F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A900788-7330-4443-B302-992556C2322F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6ACBAAEE-9AA7-4DAB-BD18-1CDE35F5B198}
+	EndGlobalSection
+EndGlobal

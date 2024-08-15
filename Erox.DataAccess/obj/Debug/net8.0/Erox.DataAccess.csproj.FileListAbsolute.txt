@@ -1,0 +1,17 @@
+D:\WebApp\Erox.Api\Erox.DataAccess\bin\Debug\net8.0\Erox.DataAccess.deps.json
+D:\WebApp\Erox.Api\Erox.DataAccess\bin\Debug\net8.0\Erox.DataAccess.runtimeconfig.json
+D:\WebApp\Erox.Api\Erox.DataAccess\bin\Debug\net8.0\Erox.DataAccess.dll
+D:\WebApp\Erox.Api\Erox.DataAccess\bin\Debug\net8.0\Erox.DataAccess.pdb
+D:\WebApp\Erox.Api\Erox.DataAccess\bin\Debug\net8.0\Erox.Domain.dll
+D:\WebApp\Erox.Api\Erox.DataAccess\bin\Debug\net8.0\Erox.Domain.pdb
+D:\WebApp\Erox.Api\Erox.DataAccess\obj\Debug\net8.0\Erox.DataAccess.csproj.AssemblyReference.cache
+D:\WebApp\Erox.Api\Erox.DataAccess\obj\Debug\net8.0\Erox.DataAccess.GeneratedMSBuildEditorConfig.editorconfig
+D:\WebApp\Erox.Api\Erox.DataAccess\obj\Debug\net8.0\Erox.DataAccess.AssemblyInfoInputs.cache
+D:\WebApp\Erox.Api\Erox.DataAccess\obj\Debug\net8.0\Erox.DataAccess.AssemblyInfo.cs
+D:\WebApp\Erox.Api\Erox.DataAccess\obj\Debug\net8.0\Erox.DataAccess.csproj.CoreCompileInputs.cache
+D:\WebApp\Erox.Api\Erox.DataAccess\obj\Debug\net8.0\Erox.Dat.6DE14972.Up2Date
+D:\WebApp\Erox.Api\Erox.DataAccess\obj\Debug\net8.0\Erox.DataAccess.dll
+D:\WebApp\Erox.Api\Erox.DataAccess\obj\Debug\net8.0\refint\Erox.DataAccess.dll
+D:\WebApp\Erox.Api\Erox.DataAccess\obj\Debug\net8.0\Erox.DataAccess.pdb
+D:\WebApp\Erox.Api\Erox.DataAccess\obj\Debug\net8.0\Erox.DataAccess.genruntimeconfig.cache
+D:\WebApp\Erox.Api\Erox.DataAccess\obj\Debug\net8.0\ref\Erox.DataAccess.dll
