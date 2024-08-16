@@ -107,5 +107,16 @@ namespace Erox.Api.Controllers.V1
 
             return result.IsError ? HandleErrorResponse(result.Errors) : NoContent();
         }
+
+        [HttpDelete]
+        [Route(ApiRoutes.Product.getById)]
+        [ValidateGuid("id")]
+        public async Task<IActionResult> DeletePost(string id, CancellationToken cancellationToken)
+        {
+           
+            var command = new DeleteProduct() { ProductId = Guid.Parse(id)};
+            var result = await _mediator.Send(command, cancellationToken);
+            return result.IsError ? HandleErrorResponse(result.Errors) : NoContent();
+        }
     }
 }
