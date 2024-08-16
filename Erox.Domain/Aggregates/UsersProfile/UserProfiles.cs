@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace Erox.Domain.Aggregates.UsersProfiles
 {
-    public class UserProfiles
+    public class UserProfileEntity
     {
-        private UserProfiles()
+        private UserProfileEntity()
         {
         }
 
@@ -23,9 +23,9 @@ namespace Erox.Domain.Aggregates.UsersProfiles
         public DateTime DateCreated { get; private set; }
         public DateTime LastModified { get; private set; }
 
-        public static UserProfiles CreateUserProfile(string IdentityId,BasicInfo basicInfo)
+        public static UserProfileEntity CreateUserProfile(string IdentityId,BasicInfo basicInfo)
         {
-            return new UserProfiles
+            return new UserProfileEntity
             {
                 IdentityId = IdentityId,
                 Basicinfo = basicInfo,

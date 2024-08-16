@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Erox.Application.UserProfile.CommandHandlers
 {
-    internal class UpdateUserInfoBasicHandler : IRequestHandler<UpdateUserInfoBasic,OperationResult<UserProfiles>>
+    internal class UpdateUserInfoBasicHandler : IRequestHandler<UpdateUserInfoBasic,OperationResult<UserProfileEntity>>
     {
         private readonly DataContext _ctx;
         public UpdateUserInfoBasicHandler(DataContext ctx)
@@ -22,9 +22,9 @@ namespace Erox.Application.UserProfile.CommandHandlers
             _ctx = ctx;
         }
 
-        public async Task<OperationResult<UserProfiles>> Handle(UpdateUserInfoBasic request, CancellationToken cancellationToken)
+        public async Task<OperationResult<UserProfileEntity>> Handle(UpdateUserInfoBasic request, CancellationToken cancellationToken)
         {
-            var result = new OperationResult<UserProfiles>();
+            var result = new OperationResult<UserProfileEntity>();
 
             try
             {

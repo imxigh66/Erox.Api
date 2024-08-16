@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Erox.Application.UserProfile.Commands
 {
-    public class UpdateUserInfoBasic:IRequest<OperationResult<UserProfiles>>
+    public class UpdateUserInfoBasic:IRequest<OperationResult<UserProfileEntity>>
     {
         public Guid UserProfileId { get; set; } 
         public string Firstname { get; private set; }

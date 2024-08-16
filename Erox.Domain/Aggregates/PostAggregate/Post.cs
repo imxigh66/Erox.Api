@@ -13,19 +13,17 @@ namespace Erox.Domain.Aggregates.PostAggregate
     public class Post
     {
         private readonly List<PostComment> _comments=new List<PostComment>();
-        private readonly List<PostInterection> _interections=new List<PostInterection>();   
         private Post()
         {
            
         }
         public Guid PostId { get; private set; }
         public Guid UserProfileId { get; private set; }
-        public UserProfiles UserProfile { get; private set; }
+        public UserProfileEntity UserProfile { get; private set; }
         public string TextContent {  get; private set; }
         public DateTime CreatedDate { get; private set; }
         public DateTime LastModified { get; private set;}
         public IEnumerable<PostComment> Comments { get { return _comments; } }
-        public IEnumerable<PostInterection> Interection { get { return _interections; } }
 
         public static Post CreatePost(Guid userProfileid, string textContent)
         {
@@ -78,16 +76,6 @@ namespace Erox.Domain.Aggregates.PostAggregate
             {
                 comment.UpdateCommenttext(updatedComment);
             }
-        }
-
-        public void AddInteraction(PostInterection _newInteraction)
-        {
-            _interections.Add(_newInteraction);
-        }
-
-        public void RemoveInteraction(PostInterection toRemove)
-        {
-            _interections.Remove(toRemove);
         }
     }
 }

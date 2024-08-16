@@ -1,0 +1,66 @@
+﻿using Erox.Domain.Aggregates.PostAggregate;
+using Erox.Domain.Aggregates.UsersProfiles;
+using Erox.Domain.Exeptions;
+using Erox.Domain.Validators.PostValidators;
+using Erox.Domain.Validators.ProductValidators;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Xml.Linq;
+
+namespace Erox.Domain.Aggregates.ProductAggregate
+{
+    public class Product
+    {
+        private readonly List<ProductReview> _reviews = new List<ProductReview>();
+       
+        public Guid ProductId { get; private set; }
+        
+        public string Name { get; private set; }
+        public string Description { get; private set; }
+        public decimal Price { get; private set; }  
+        public decimal DiscountPrice { get; private set; }
+        public string Category {  get; private set; }
+        public string Size { get; private set; }
+        public string Color { get; private set; }
+        public string Image {  get; private set; }
+        public string Season { get; private set; }
+        public string  Code { get; private set; }
+        public DateTime CreatedDate { get; private set; }
+        public DateTime LastModified { get; private set; }
+        public IEnumerable<ProductReview> Reviews { get { return _reviews; } }
+
+
+
+        public static Product CreateProduct(string name,string description,decimal price,decimal discount,string category,string size,string color,string image,string season,string code)
+        {
+            var validator = new ProductValidator();
+            var objectToValidate = new Product
+            {
+                Name = name,
+                Description = description,  
+                Price=price,
+                DiscountPrice=discount,
+                Category = category,
+                Size = size,
+                Color = color,
+                Image = image,
+                Season=season,
+                Code=code,
+                CreatedDate = DateTime.UtcNow,
+                LastModified = DateTime.UtcNow,
+            };
+
+            var validationResult = validator.Validate(objectToValidate);
+
+            if (validationResult.IsValid) return objectToValidate;
+
+            var exception = new PostNotValidException("Product is not valid");
+            validationResult.Errors.ForEach(vr => exception.ValidationErrors.Add(vr.ErrorMessage));
+            throw exception;
+        }
+    }
+}

@@ -15,13 +15,13 @@ namespace Erox.Api.MappingProfiles
         {
             
             CreateMap<UserProfileCreateUpdate, UpdateUserInfoBasic>();
-            CreateMap<UserProfiles,UserProfileResponse>();
+            CreateMap<UserProfileEntity,UserProfileResponse>();
 
             //CreateMap<OperationResult<IEnumerable<UserProfiles>>, List<UserProfileResponse>>()
             //.ConvertUsing((src, dest, context) => context.Mapper.Map<List<UserProfileResponse>>(src.Errors.ToList()));
             //CreateMap<OperationResult<UserProfiles>, UserProfileResponse>();
             CreateMap<BasicInfo, BasicInformation>();
-            CreateMap<UserProfiles, InteractionUser>()
+            CreateMap<UserProfileEntity, InteractionUser>()
                 .ForMember(dest => dest.FullName,opt
                 =>opt.MapFrom(src
                 =>src.Basicinfo.Firstname+ " " + src.Basicinfo.Lastname))

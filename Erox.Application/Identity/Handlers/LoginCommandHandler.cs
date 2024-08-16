@@ -83,7 +83,7 @@ namespace Erox.Application.Identity.Handlers
             return identityUser;
         }
 
-        private string GetJwtString(IdentityUser identityUser, UserProfiles userProfile)
+        private string GetJwtString(IdentityUser identityUser, UserProfileEntity userProfile)
         {
             var claimsIdentity = new ClaimsIdentity(new Claim[]
                {

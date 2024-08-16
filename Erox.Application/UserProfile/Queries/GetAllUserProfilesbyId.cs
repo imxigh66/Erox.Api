@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Erox.Application.UserProfile.Queries
 {
-    public class GetAllUserProfilesbyId:IRequest<OperationResult<UserProfiles>>
+    public class GetAllUserProfilesbyId:IRequest<OperationResult<UserProfileEntity>>
     {
         public Guid UserProfileId {  get; set; }
     }

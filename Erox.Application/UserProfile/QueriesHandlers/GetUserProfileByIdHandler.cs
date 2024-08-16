@@ -8,16 +8,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Erox.Application.UserProfile.QueriesHandlers
 {
-    internal class GetUserProfileByIdHandler : IRequestHandler<GetAllUserProfilesbyId, OperationResult<UserProfiles>>
+    internal class GetUserProfileByIdHandler : IRequestHandler<GetAllUserProfilesbyId, OperationResult<UserProfileEntity>>
     {
         private readonly DataContext _ctx;
         public GetUserProfileByIdHandler(DataContext ctx)
         {
             _ctx = ctx;
         }
-        public async Task<OperationResult<UserProfiles>> Handle(GetAllUserProfilesbyId request, CancellationToken cancellationToken)
+        public async Task<OperationResult<UserProfileEntity>> Handle(GetAllUserProfilesbyId request, CancellationToken cancellationToken)
         {
-            var result=new OperationResult<UserProfiles>();
+            var result=new OperationResult<UserProfileEntity>();
            var profile = await _ctx.UserProfiles.FirstOrDefaultAsync(up => up.UserProfileId == request.UserProfileId, cancellationToken: cancellationToken);
             if (profile == null)
             {

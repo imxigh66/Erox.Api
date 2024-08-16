@@ -12,16 +12,16 @@ using System.Threading.Tasks;
 
 namespace Erox.Application.UserProfile.QueriesHandlers
 {
-    internal class GetAllUserProfilesQHandlers : IRequestHandler<GetAllUserProfiles, OperationResult<IEnumerable<UserProfiles>>>
+    internal class GetAllUserProfilesQHandlers : IRequestHandler<GetAllUserProfiles, OperationResult<IEnumerable<UserProfileEntity>>>
     {
         private readonly DataContext _ctx;
         public GetAllUserProfilesQHandlers(DataContext ctx)
         {
             _ctx = ctx;
         }
-        public async Task<OperationResult<IEnumerable<UserProfiles>>> Handle(GetAllUserProfiles request, CancellationToken cancellationToken)
+        public async Task<OperationResult<IEnumerable<UserProfileEntity>>> Handle(GetAllUserProfiles request, CancellationToken cancellationToken)
         {
-            var result=new OperationResult<IEnumerable<UserProfiles>>();
+            var result=new OperationResult<IEnumerable<UserProfileEntity>>();
             result.PayLoad= await _ctx.UserProfiles.ToListAsync(cancellationToken: cancellationToken);
             return result;
         }

@@ -17,14 +17,13 @@ namespace Erox.DataAccess
 
         public DataContext(DbContextOptions<DataContext> options) : base(options) { }
 
-        public DbSet<UserProfiles> UserProfiles { get; set; }
+        public DbSet<UserProfileEntity> UserProfiles { get; set; }
         public DbSet<Post> Posts { get; set; }
         public DbSet<Product> Products { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfiguration(new PostCommentConfig());
-            builder.ApplyConfiguration(new PostInteractiononfig());
             builder.ApplyConfiguration(new UserProfileCnfig());
             builder.ApplyConfiguration(new IdentityUserLoginConfig());
             builder.ApplyConfiguration(new IdentityUserRoleConfig());

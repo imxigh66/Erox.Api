@@ -10,12 +10,6 @@ namespace Erox.Api.MappingProfiles
         {
             CreateMap<Post,PostResponce>();
             CreateMap<PostComment, PostCommentResponse>();
-            CreateMap<PostInterection, PostInterectionResponse>()
-                .ForMember(dest => dest.Type, opt 
-                => opt.MapFrom(src
-                => src.InterectionType.ToString()))
-                .ForMember(dest => dest.Author, opt
-            => opt.MapFrom(src => src.UsersProfile));
         }
     }
 }

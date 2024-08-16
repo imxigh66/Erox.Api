@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace Erox.DataAccess.Configuarations
 {
-    internal class UserProfileCnfig : IEntityTypeConfiguration<UserProfiles>
+    internal class UserProfileCnfig : IEntityTypeConfiguration<UserProfileEntity>
     {
-        public void Configure(EntityTypeBuilder<UserProfiles> builder)
+        public void Configure(EntityTypeBuilder<UserProfileEntity> builder)
         {
             builder.HasKey(up => up.UserProfileId);
             builder.OwnsOne(up => up.Basicinfo);

@@ -27,5 +27,10 @@
             public const string CurrentUser = "currentuser";
             
         }
+
+        public static class Product
+        {
+            public const string getById = "{id}";
+        }
     }
 }

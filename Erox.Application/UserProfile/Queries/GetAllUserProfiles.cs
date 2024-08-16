@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Erox.Application.UserProfile.Queries
 {
-    public class GetAllUserProfiles:IRequest<OperationResult<IEnumerable<UserProfiles>>>
+    public class GetAllUserProfiles:IRequest<OperationResult<IEnumerable<UserProfileEntity>>>
     {
     }
 }

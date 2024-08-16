@@ -119,14 +119,14 @@ namespace Erox.Application.Identity.Handlers
             return identity;
         }
 
-        private async Task<UserProfiles> CreateUserProfileAsync(RegisterIdentity request, IDbContextTransaction transaction,IdentityUser identity,CancellationToken cancellationToken)
+        private async Task<UserProfileEntity> CreateUserProfileAsync(RegisterIdentity request, IDbContextTransaction transaction,IdentityUser identity,CancellationToken cancellationToken)
         {
             
             try
             {
                 var profileInfo = BasicInfo.CreateBasicInfo(request.FirstName, request.LastName, request.Username,
                 request.Phone, request.DateOfBirth, request.CurrentCity);
-                var profile = UserProfiles.CreateUserProfile(identity.Id, profileInfo);
+                var profile = UserProfileEntity.CreateUserProfile(identity.Id, profileInfo);
                 _ctx.UserProfiles.Add(profile);
                 await _ctx.SaveChangesAsync(cancellationToken);
                 return profile;
@@ -139,7 +139,7 @@ namespace Erox.Application.Identity.Handlers
             }
         }
 
-        private string GetJwtString(IdentityUser identity,UserProfiles profile)
+        private string GetJwtString(IdentityUser identity,UserProfileEntity profile)
         {
             var claimsIdentity = new ClaimsIdentity(new Claim[]
               {

@@ -13,7 +13,7 @@ namespace Erox.Application.Identity.Mapping
     {
         public IdentityProfile()
         {
-            CreateMap<UserProfiles,IdentityUserProfile>()
+            CreateMap<UserProfileEntity,IdentityUserProfile>()
                 .ForMember(dest => dest.Phone, opt
             => opt.MapFrom(src => src.Basicinfo.Phone))
             .ForMember(dest => dest.CurrentCity, opt
