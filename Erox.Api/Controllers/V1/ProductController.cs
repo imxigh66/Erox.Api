@@ -175,5 +175,20 @@ namespace Erox.Api.Controllers.V1
             if (result.IsError) { return HandleErrorResponse(result.Errors); }
             return NoContent();
         }
+
+
+
+        [HttpGet]
+        [Route(ApiRoutes.Product.ProductReview)]
+        public async Task<IActionResult> GetReviewById(string productId, CancellationToken cancellationToken)
+        {
+            var query = new GetReviewByProductId() { ProductId = Guid.Parse(productId) };
+            var result = await _mediator.Send(query, cancellationToken);
+
+            if (result.IsError) HandleErrorResponse(result.Errors);
+
+            var reviews = _mapper.Map<List<ProductReviewResponse>>(result.PayLoad);
+            return Ok(reviews);
+        }
     }
 }
