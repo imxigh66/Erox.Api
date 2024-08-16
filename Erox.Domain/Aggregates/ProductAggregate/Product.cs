@@ -87,5 +87,10 @@ namespace Erox.Domain.Aggregates.ProductAggregate
 
             LastModified = DateTime.UtcNow;
         }
+
+        public void AddProductReview(ProductReview review)
+        {
+            _reviews.Add(review);
+        }
     }
 }

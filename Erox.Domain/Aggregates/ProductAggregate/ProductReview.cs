@@ -1,4 +1,8 @@
-﻿using System;
+﻿using Erox.Domain.Aggregates.PostAggregate;
+using Erox.Domain.Exeptions;
+using Erox.Domain.Validators.PostValidators;
+using Erox.Domain.Validators.ProductValidators;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,5 +21,29 @@ namespace Erox.Domain.Aggregates.ProductAggregate
         public bool IsApproved { get; private set; }
         public DateTime CreatedDate { get; private set; }
         public DateTime LastModified { get; private set; }
+
+
+        public static ProductReview CreateProductReview(Guid productid, string text,string rating,bool isApproved)
+        {
+            var validator = new ProductReviewValidator();
+            var objectToValidate = new ProductReview
+            {
+                Productid = productid,
+                Text = text,
+                Rating = rating,
+                IsApproved = isApproved,
+              
+                CreatedDate = DateTime.Now,
+                LastModified = DateTime.Now,
+            };
+            var validationResult = validator.Validate(objectToValidate);
+
+            if (validationResult.IsValid) return objectToValidate;
+
+            var exeption = new ProductReviewNotValidException("Review is not valid");
+            validationResult.Errors.ForEach(vr => exeption.ValidationErrors.Add(vr.ErrorMessage));
+            throw exeption;
+        }
+
     }
 }

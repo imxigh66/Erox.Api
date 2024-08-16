@@ -10,6 +10,8 @@ using Erox.Application.Posts.Queries;
 using Erox.Application.Products.Command;
 using Erox.Application.Products.Queries;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Erox.Api.Controllers.V1
@@ -18,6 +20,7 @@ namespace Erox.Api.Controllers.V1
     [ApiVersion("1.0")]
     [Route(ApiRoutes.BaseRoute)]
     [ApiController]
+    
     public class ProductController : BaseController
     {
         private readonly IMediator _mediator;
@@ -117,6 +120,42 @@ namespace Erox.Api.Controllers.V1
             var command = new DeleteProduct() { ProductId = Guid.Parse(id)};
             var result = await _mediator.Send(command, cancellationToken);
             return result.IsError ? HandleErrorResponse(result.Errors) : NoContent();
+        }
+
+        [HttpPost]
+        [Route(ApiRoutes.Product.ProductReview)]
+        [ValidateGuid("productId")]
+        [ValidateModel]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<IActionResult> AddProductReview(string productId, [FromBody] ProductReviewCreate review, CancellationToken cancellationToken)
+        {
+            var userProfileId = HttpContext.GetUserProfileIdClaimValue();
+
+
+
+            var command = new AddProductReview()
+            {
+                ProductId = Guid.Parse(productId),
+               
+                Rating = review.Rating,
+                IsApproved = review.IsApproved,
+                Text = review.Text,
+                
+
+                
+            };
+
+            var result = await _mediator.Send(command, cancellationToken);
+
+            if (result.IsError) return HandleErrorResponse(result.Errors);
+
+            var newReview = _mapper.Map<ProductReviewResponse>(result.PayLoad);
+
+            return Ok(new
+            {
+                UserProfileId = userProfileId,
+                Review = newReview
+            });
         }
     }
 }

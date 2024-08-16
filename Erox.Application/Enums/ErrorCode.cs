@@ -22,7 +22,8 @@ namespace Erox.Application.Enums
        PostDeleteNotPossible=301,
        InteractionRemovalNotAuthorized=302,
        UnauthorizedAccountRemoval=303,
-        CommentRemovalNotAuthorized=304
+        CommentRemovalNotAuthorized=304,
+        AddReviewNotAuthorized=305
 
 
     }

@@ -31,6 +31,7 @@
         public static class Product
         {
             public const string getById = "{id}";
+            public const string ProductReview = "{productId}/reviews";
         }
     }
 }
