@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 
 namespace Erox.Api.Registrars
@@ -17,6 +18,12 @@ namespace Erox.Api.Registrars
                 }
             });
             app.UseHttpsRedirection();
+            app.UseCookiePolicy(new CookiePolicyOptions
+            {
+                MinimumSameSitePolicy=SameSiteMode.Strict,
+                HttpOnly=HttpOnlyPolicy.Always,
+                Secure=CookieSecurePolicy.Always
+            });
 
             app.UseAuthentication();
             app.UseAuthorization();

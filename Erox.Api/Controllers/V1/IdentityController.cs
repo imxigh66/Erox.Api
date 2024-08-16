@@ -36,7 +36,8 @@ namespace Erox.Api.Controllers.V1
 
             if (result.IsError) return HandleErrorResponse(result.Errors);
             return Ok(_mapper.Map<Contracts.identity.IdentityUserProfile>(result.PayLoad));
-            }
+        }
+
 
         [HttpPost]
         [Route(ApiRoutes.Identity.Login)]
@@ -47,7 +48,16 @@ namespace Erox.Api.Controllers.V1
             var result= await _mediator.Send(command, cancellationToken);
 
             if (result.IsError) return HandleErrorResponse(result.Errors);
-            return Ok(_mapper.Map<Contracts.identity.IdentityUserProfile>(result.PayLoad));
+
+            var identityUserProfile = result.PayLoad;
+
+            
+
+            Response.Cookies.Append("AuthToken", identityUserProfile.Token);
+
+            return Ok(_mapper.Map<Contracts.identity.IdentityUserProfile>(identityUserProfile));
+
+            //return Ok(_mapper.Map<Contracts.identity.IdentityUserProfile>(result.PayLoad));
         }
 
 

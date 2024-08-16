@@ -43,6 +43,15 @@ namespace Erox.Api.Registrars
                 };
                 jwt.Audience = jwtSettings.Audiences[0];
                 jwt.ClaimsIssuer = jwtSettings.Issuer;
+                //cookies
+                jwt.Events = new JwtBearerEvents
+                {
+                    OnMessageReceived = context =>
+                    {
+                        context.Token = context.Request.Cookies["AuthToken"];
+                        return Task.CompletedTask;
+                    }
+                };
             });
         }
     }

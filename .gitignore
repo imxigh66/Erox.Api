@@ -1,0 +1,9 @@
+﻿.vs
+Erox.Api/bin
+Erox.Api/obj
+Erox.Application/bin
+Erox.DataAccess/bin
+Erox.Application/obj
+Erox.DataAccess
+Erox.Domain/bin
+Erox.Domain/obj
