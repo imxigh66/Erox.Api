@@ -3,6 +3,7 @@ using Erox.Api.Contracts.posts.requests;
 using Erox.Api.Contracts.posts.responses;
 using Erox.Api.Contracts.product.requests;
 using Erox.Api.Contracts.product.responses;
+using Erox.Api.Extentions;
 using Erox.Api.Filters;
 using Erox.Application.Posts.Commands;
 using Erox.Application.Posts.Queries;
@@ -74,6 +75,37 @@ namespace Erox.Api.Controllers.V1
             var result = await _mediator.Send(new GetAllProducts(), cancellationToken);
             var mapped = _mapper.Map<List<ProductResponce>>(result.PayLoad);
             return result.IsError ? HandleErrorResponse(result.Errors) : Ok(mapped);
+        }
+
+        [HttpPatch]
+        [Route(ApiRoutes.Product.getById)]
+        [ValidateGuid("id")]
+        [ValidateModel]
+        public async Task<IActionResult> UpdateProduct([FromBody] ProductCreate updatedProduct, string id, CancellationToken cancellationToken)
+        {
+            
+
+            var command = new UpdateProduct()
+            {
+                Name = updatedProduct.Name,
+                Description = updatedProduct.Description,
+                Size = updatedProduct.Size,
+                Code = updatedProduct.Code,
+                Image = updatedProduct.Image,
+                Category= updatedProduct.Category,
+                Color = updatedProduct.Color,
+                Season = updatedProduct.Season,
+                Price = updatedProduct.Price,
+                DiscountPrice = updatedProduct.DiscountPrice,
+
+
+                ProductId = Guid.Parse(id),
+                
+
+            };
+            var result = await _mediator.Send(command, cancellationToken);
+
+            return result.IsError ? HandleErrorResponse(result.Errors) : NoContent();
         }
     }
 }

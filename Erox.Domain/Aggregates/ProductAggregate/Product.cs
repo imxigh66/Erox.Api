@@ -62,5 +62,30 @@ namespace Erox.Domain.Aggregates.ProductAggregate
             validationResult.Errors.ForEach(vr => exception.ValidationErrors.Add(vr.ErrorMessage));
             throw exception;
         }
+
+        public void UpdateProducts(string name, string description, decimal price, decimal discount, string category, string size, string color, string image, string season, string code)
+        {
+            //if (string.IsNullOrWhiteSpace(newText))
+            //{
+            //    var exception = new PostNotValidException("Cannot update post." +
+            //                                              "Post text is not valid");
+            //    exception.ValidationErrors.Add("The provided text is either null or contains only white space");
+            //    throw exception;
+            //}
+            Name = name;
+            Description = description;
+            Price = price;
+            DiscountPrice = discount;
+            Category = category;
+            Size = size;
+            Color = color;
+            Image = image;
+            Season = season;
+            Code = code;
+           
+
+
+            LastModified = DateTime.UtcNow;
+        }
     }
 }
