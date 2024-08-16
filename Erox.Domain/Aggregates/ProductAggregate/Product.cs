@@ -92,5 +92,9 @@ namespace Erox.Domain.Aggregates.ProductAggregate
         {
             _reviews.Add(review);
         }
+        public void ARemoveReview(ProductReview toRemove)
+        {
+            _reviews.Remove(toRemove);
+        }
     }
 }

@@ -32,6 +32,7 @@
         {
             public const string getById = "{id}";
             public const string ProductReview = "{productId}/reviews";
+            public const string ReviewById = "{productId}/reviews/{reviewId}";
         }
     }
 }

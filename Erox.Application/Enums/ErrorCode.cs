@@ -23,7 +23,7 @@ namespace Erox.Application.Enums
        InteractionRemovalNotAuthorized=302,
        UnauthorizedAccountRemoval=303,
         CommentRemovalNotAuthorized=304,
-        AddReviewNotAuthorized=305
+        RemoveReviewNotAuthorized=305
 
 
     }

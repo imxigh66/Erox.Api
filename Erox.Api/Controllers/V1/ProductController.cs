@@ -141,8 +141,6 @@ namespace Erox.Api.Controllers.V1
                 IsApproved = review.IsApproved,
                 Text = review.Text,
                 
-
-                
             };
 
             var result = await _mediator.Send(command, cancellationToken);
@@ -156,6 +154,26 @@ namespace Erox.Api.Controllers.V1
                 UserProfileId = userProfileId,
                 Review = newReview
             });
+        }
+
+
+        [HttpDelete]
+        [Route(ApiRoutes.Product.ReviewById)]
+        [ValidateGuid("productId", "reviewId")]
+        public async Task<IActionResult> RemoveReviewFromProduct(string productId, string reviewId, CancellationToken cancellationToken)
+        {
+            var userProfileId = HttpContext.GetUserProfileIdClaimValue();
+            var productGuid = Guid.Parse(productId);
+            var reviewGuid = Guid.Parse(reviewId);
+            var command = new DeleteReview
+            {
+                UserProfileId = userProfileId,
+                ProductId=productGuid,
+                ReviewId=reviewGuid
+            };
+            var result = await _mediator.Send(command, cancellationToken);
+            if (result.IsError) { return HandleErrorResponse(result.Errors); }
+            return NoContent();
         }
     }
 }
