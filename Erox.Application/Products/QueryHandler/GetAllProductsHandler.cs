@@ -25,8 +25,7 @@ namespace Erox.Application.Products.QueryHandler
             var result = new OperationResult<List<Product>>();
             try
             {
-
-                var product = await _ctx.Products.ToListAsync();
+                var product = await _ctx.Products.Include(i => i.Sizes).ToListAsync();
                 result.PayLoad = product;
             }
             catch (Exception e)

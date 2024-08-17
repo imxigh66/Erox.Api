@@ -11,6 +11,7 @@ namespace Erox.Api.MappingProfiles
         {
             CreateMap<Product, ProductResponce>();
             CreateMap<ProductReview,ProductReviewResponse>();
+            CreateMap<ProductSize, ProductSizeResponse>();
         }
     }
 }

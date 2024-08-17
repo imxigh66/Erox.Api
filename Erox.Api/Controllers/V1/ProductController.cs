@@ -59,7 +59,6 @@ namespace Erox.Api.Controllers.V1
                 Color=newProduct.Color,
                 Category=newProduct.Category,
                 Season=newProduct.Season,
-                Size=newProduct.Size,
                 Code=newProduct.Code,
                 Image   =newProduct.Image,
                 
@@ -92,7 +91,6 @@ namespace Erox.Api.Controllers.V1
             {
                 Name = updatedProduct.Name,
                 Description = updatedProduct.Description,
-                Size = updatedProduct.Size,
                 Code = updatedProduct.Code,
                 Image = updatedProduct.Image,
                 Category= updatedProduct.Category,

@@ -9,7 +9,7 @@
         public decimal Price { get; private set; }
         public decimal DiscountPrice { get; private set; }
         public string Category { get; private set; }
-        public string Size { get; private set; }
+        public ProductSizeResponse[] Sizes { get; private set; }
         public string Color { get; private set; }
         public string Image { get; private set; }
         public string Season { get; private set; }

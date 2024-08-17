@@ -25,7 +25,7 @@ namespace Erox.Application.Products.CommandHandler
             var result = new OperationResult<Product>();
             try
             {
-                var product = Product.CreateProduct(request.Name,request.Description,request.Price,request.DiscountPrice, request.Category, request.Size, request.Color,request.Image,request.Season, request.Code);
+                var product = Product.CreateProduct(request.Name,request.Description,request.Price,request.DiscountPrice, request.Category, request.Color,request.Image,request.Season, request.Code);
                 _ctx.Products.Add(product);
                 await _ctx.SaveChangesAsync(cancellationToken);
                 result.PayLoad = product;

@@ -33,6 +33,7 @@
             public const string getById = "{id}";
             public const string ProductReview = "{productId}/reviews";
             public const string ReviewById = "{productId}/reviews/{reviewId}";
+            public const string ProductSize = "{productId}/sizes";
         }
         public static class Wishlist
         {

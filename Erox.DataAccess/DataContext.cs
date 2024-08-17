@@ -34,6 +34,7 @@ namespace Erox.DataAccess
             builder.ApplyConfiguration(new ProductConfig());
             builder.ApplyConfiguration(new WishlistConfig());
             builder.ApplyConfiguration(new WishlistItemConfig());
+            builder.ApplyConfiguration(new ProductSizeConfig());
             base.OnModelCreating(builder);
         }
     }
