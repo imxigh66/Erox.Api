@@ -1,13 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Erox.Domain.Aggregates.ProductAggregate;
 
 namespace Erox.Api.Contracts.cards.response
 {
     public class CardProductResponse
     {
-        [Required]
         public Guid ProductId { get; set; }
-
-        [Required]
-        public Guid UserId { get; set; }
+        public string Color { get; set; }
+        public string Quantity { get; set; }
+        public ProductSize Size { get; set; }   
     }
 }
