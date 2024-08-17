@@ -1,4 +1,5 @@
 ﻿using Erox.DataAccess.Configuarations;
+using Erox.Domain.Aggregates.CardAggregate;
 using Erox.Domain.Aggregates.PostAggregate;
 using Erox.Domain.Aggregates.ProductAggregate;
 using Erox.Domain.Aggregates.UsersProfiles;
@@ -22,6 +23,7 @@ namespace Erox.DataAccess
         public DbSet<Post> Posts { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Wishlist> Wishlists { get; set; }
+        public DbSet<Card> Cards { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -35,6 +37,8 @@ namespace Erox.DataAccess
             builder.ApplyConfiguration(new WishlistConfig());
             builder.ApplyConfiguration(new WishlistItemConfig());
             builder.ApplyConfiguration(new ProductSizeConfig());
+            builder.ApplyConfiguration(new CardConfig());
+            builder.ApplyConfiguration(new CardItemsConfig());
             base.OnModelCreating(builder);
         }
     }
