@@ -16,7 +16,7 @@ namespace Erox.Domain.Aggregates.ProductAggregate
     public class Product
     {
         private readonly List<ProductReview> _reviews = new List<ProductReview>();
-       
+        private readonly List<ProductSize> _sizes = new List<ProductSize>();
         public Guid ProductId { get; private set; }
         
         public string Name { get; private set; }
@@ -24,7 +24,6 @@ namespace Erox.Domain.Aggregates.ProductAggregate
         public decimal Price { get; private set; }  
         public decimal DiscountPrice { get; private set; }
         public string Category {  get; private set; }
-        public string Size { get; private set; }
         public string Color { get; private set; }
         public string Image {  get; private set; }
         public string Season { get; private set; }
@@ -32,10 +31,11 @@ namespace Erox.Domain.Aggregates.ProductAggregate
         public DateTime CreatedDate { get; private set; }
         public DateTime LastModified { get; private set; }
         public IEnumerable<ProductReview> Reviews { get { return _reviews; } }
+        public IEnumerable<ProductSize> Sizes {  get { return _sizes; } }
 
 
 
-        public static Product CreateProduct(string name,string description,decimal price,decimal discount,string category,string size,string color,string image,string season,string code)
+        public static Product CreateProduct(string name,string description,decimal price,decimal discount,string category,string color,string image,string season,string code)
         {
             var validator = new ProductValidator();
             var objectToValidate = new Product
@@ -45,7 +45,6 @@ namespace Erox.Domain.Aggregates.ProductAggregate
                 Price=price,
                 DiscountPrice=discount,
                 Category = category,
-                Size = size,
                 Color = color,
                 Image = image,
                 Season=season,
@@ -63,7 +62,7 @@ namespace Erox.Domain.Aggregates.ProductAggregate
             throw exception;
         }
 
-        public void UpdateProducts(string name, string description, decimal price, decimal discount, string category, string size, string color, string image, string season, string code)
+        public void UpdateProducts(string name, string description, decimal price, decimal discount, string category, string color, string image, string season, string code)
         {
             //if (string.IsNullOrWhiteSpace(newText))
             //{
@@ -77,7 +76,6 @@ namespace Erox.Domain.Aggregates.ProductAggregate
             Price = price;
             DiscountPrice = discount;
             Category = category;
-            Size = size;
             Color = color;
             Image = image;
             Season = season;
@@ -95,6 +93,11 @@ namespace Erox.Domain.Aggregates.ProductAggregate
         public void ARemoveReview(ProductReview toRemove)
         {
             _reviews.Remove(toRemove);
+        }
+
+        public void AddProductSize(ProductSize size)
+        {
+            _sizes.Add(size);
         }
     }
 }
