@@ -34,5 +34,9 @@
             public const string ProductReview = "{productId}/reviews";
             public const string ReviewById = "{productId}/reviews/{reviewId}";
         }
+        public static class Wishlist
+        {
+            public const string getById = "{id}";
+        }
     }
 }

@@ -55,5 +55,22 @@ namespace Erox.Api.Controllers.V1
             var mapped = _mapper.Map<List<WishlistProductResponse>>(result.PayLoad);
             return result.IsError ? HandleErrorResponse(result.Errors) : Ok(mapped);
         }
+
+        [HttpDelete]
+        [Route(ApiRoutes.Product.getById)]
+        [ValidateGuid("id")]
+        public async Task<IActionResult> RemoveFromWishlist(string id, CancellationToken cancellationToken)
+        {
+            var userId = HttpContext.GetUserProfileIdClaimValue();
+            var command = new RemoveFromWishlist() { ProductId = Guid.Parse(id), UserId = userId };
+            var result = await _mediator.Send(command, cancellationToken);
+
+            if (result.IsError)
+            {
+                return HandleErrorResponse(result.Errors);
+            }
+
+            return NoContent();
+        }
     }
 }
