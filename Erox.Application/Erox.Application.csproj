@@ -21,8 +21,6 @@
 
   <ItemGroup>
     <Folder Include="MappingProfiles\" />
-    <Folder Include="Wishlists\QueryHandler\" />
-    <Folder Include="Wishlists\Queries\" />
   </ItemGroup>
 
 </Project>

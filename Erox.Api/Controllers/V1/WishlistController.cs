@@ -1,9 +1,12 @@
 ﻿using AutoMapper;
 using Erox.Api.Contracts.product.responses;
 using Erox.Api.Contracts.wishlist.response;
+using Erox.Api.Extentions;
 using Erox.Api.Filters;
 using Erox.Application.Products.Command;
+using Erox.Application.Products.Queries;
 using Erox.Application.Wishlists.Command;
+using Erox.Application.Wishlists.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -36,6 +39,21 @@ namespace Erox.Api.Controllers.V1
             if (result.IsError) return HandleErrorResponse(result.Errors);
             var mapped = _mapper.Map<AddWishlistResponse>(result.PayLoad);
             return Ok(mapped);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetWishlist(CancellationToken cancellationToken)
+        {
+            var userId = HttpContext.GetUserProfileIdClaimValue();
+
+            // Создаем запрос
+            var query = new GetWishlist
+            {
+                UserId = userId
+            };
+            var result = await _mediator.Send(query, cancellationToken);
+            var mapped = _mapper.Map<List<WishlistProductResponse>>(result.PayLoad);
+            return result.IsError ? HandleErrorResponse(result.Errors) : Ok(mapped);
         }
     }
 }
