@@ -191,6 +191,43 @@ namespace Erox.DataAccess.Migrations
                     b.ToTable("UserProfiles");
                 });
 
+            modelBuilder.Entity("Erox.Domain.Aggregates.WishlistAggregate.Wishlist", b =>
+                {
+                    b.Property<Guid>("WishlistId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("WishlistId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Wishlists");
+                });
+
+            modelBuilder.Entity("Erox.Domain.Aggregates.WishlistAggregate.WishlistItem", b =>
+                {
+                    b.Property<Guid>("WishlistItemId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("WishlistId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("WishlistItemId");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("WishlistId");
+
+                    b.ToTable("WishlistItem");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -460,6 +497,36 @@ namespace Erox.DataAccess.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Erox.Domain.Aggregates.WishlistAggregate.Wishlist", b =>
+                {
+                    b.HasOne("Erox.Domain.Aggregates.UsersProfiles.UserProfileEntity", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Erox.Domain.Aggregates.WishlistAggregate.WishlistItem", b =>
+                {
+                    b.HasOne("Erox.Domain.Aggregates.ProductAggregate.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Erox.Domain.Aggregates.WishlistAggregate.Wishlist", "Wishlist")
+                        .WithMany("Items")
+                        .HasForeignKey("WishlistId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("Wishlist");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -519,6 +586,11 @@ namespace Erox.DataAccess.Migrations
             modelBuilder.Entity("Erox.Domain.Aggregates.ProductAggregate.Product", b =>
                 {
                     b.Navigation("Reviews");
+                });
+
+            modelBuilder.Entity("Erox.Domain.Aggregates.WishlistAggregate.Wishlist", b =>
+                {
+                    b.Navigation("Items");
                 });
 #pragma warning restore 612, 618
         }

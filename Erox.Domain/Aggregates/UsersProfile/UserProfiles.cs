@@ -16,7 +16,7 @@ namespace Erox.Domain.Aggregates.UsersProfiles
         }
 
        
-        public Guid UserProfileId { get; private set; }
+        public Guid UserProfileId { get; set; }
         public BasicInfo Basicinfo { get; private set; }
         public string IdentityId { get; private set; }
        

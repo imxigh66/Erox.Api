@@ -29,4 +29,8 @@
     <ProjectReference Include="..\Erox.Domain\Erox.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Contracts\wishlist\request\" />
+  </ItemGroup>
+
 </Project>
