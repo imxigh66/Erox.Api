@@ -21,6 +21,8 @@
 
   <ItemGroup>
     <Folder Include="MappingProfiles\" />
+    <Folder Include="Orders\Queryhandler\" />
+    <Folder Include="Orders\Queries\" />
   </ItemGroup>
 
 </Project>

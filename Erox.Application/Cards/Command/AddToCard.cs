@@ -16,7 +16,7 @@ namespace Erox.Application.Cards.Command
         public Guid ProductId { get; set; }
         public Guid ProductSizeId { get; set; }
         public string Color { get; set; }
-        public string Quantity { get; set; }    
+        public int Quantity { get; set; }    
 
     }
 }
