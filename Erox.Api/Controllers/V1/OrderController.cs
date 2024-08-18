@@ -2,12 +2,14 @@
 using Erox.Api.Contracts.cards.response;
 using Erox.Api.Contracts.orders.request;
 using Erox.Api.Contracts.orders.response;
+using Erox.Api.Contracts.product.requests;
 using Erox.Api.Extentions;
 using Erox.Api.Filters;
 using Erox.Application.Cards.Command;
 using Erox.Application.Cards.Queries;
 using Erox.Application.Orders.Command;
 using Erox.Application.Orders.Queries;
+using Erox.Application.Products.Command;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -75,7 +77,7 @@ namespace Erox.Api.Controllers.V1
         [HttpDelete]
         [Route(ApiRoutes.Order.getByOrder)]
         [ValidateGuid("id")]
-        public async Task<IActionResult> RemoveFromCard(string id, CancellationToken cancellationToken)
+        public async Task<IActionResult> RemoveFromOrder(string id, CancellationToken cancellationToken)
         {
             
             var command = new DeleteOrder() { OrderId = Guid.Parse(id)};
@@ -87,6 +89,30 @@ namespace Erox.Api.Controllers.V1
             }
 
             return NoContent();
+        }
+
+        [HttpPatch]
+        [Route(ApiRoutes.Order.getByOrder)]
+        [ValidateGuid("id")]
+        [ValidateModel]
+        public async Task<IActionResult> UpdateOrder([FromBody] UpdateOrderRequest updatedOrder, string id, CancellationToken cancellationToken)
+        {
+
+
+            var command = new UpdateOrder()
+            {
+                ShippingMethod=updatedOrder.ShippingMethod.ToString(),
+                PaymentMethod=updatedOrder.PaymentMethod.ToString(),
+                Status=updatedOrder.Status.ToString(),
+                Address=updatedOrder.Address,
+               
+                Items=updatedOrder.Items,
+
+
+            };
+            var result = await _mediator.Send(command, cancellationToken);
+
+            return result.IsError ? HandleErrorResponse(result.Errors) : NoContent();
         }
     }
 }
