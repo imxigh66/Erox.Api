@@ -54,11 +54,11 @@ namespace Erox.Api.Controllers.V1
 
         [HttpGet]
         
-        public async Task<IActionResult> GetAllOrder(Guid? orderId, [FromQuery] string? status, [FromQuery] DateTime? createdDate,CancellationToken cancellationToken)
+        public async Task<IActionResult> GetOrderByFilters(Guid? orderId, [FromQuery] string? status, [FromQuery] DateTime? createdDate,CancellationToken cancellationToken)
         {
             var userId = HttpContext.GetUserProfileIdClaimValue();
 
-            // Создаем запрос
+            // потом сделать чтоб админ смог получить заказы и по userid 
             var query = new GetOrder
             {
                 UserId = userId,
@@ -70,6 +70,23 @@ namespace Erox.Api.Controllers.V1
             var mapped= _mapper.Map<List<OrderResponse>>(result.PayLoad);
             return result.IsError ? HandleErrorResponse(result.Errors) : Ok(mapped);
             
+        }
+
+        [HttpDelete]
+        [Route(ApiRoutes.Order.getByOrder)]
+        [ValidateGuid("id")]
+        public async Task<IActionResult> RemoveFromCard(string id, CancellationToken cancellationToken)
+        {
+            
+            var command = new DeleteOrder() { OrderId = Guid.Parse(id)};
+            var result = await _mediator.Send(command, cancellationToken);
+
+            if (result.IsError)
+            {
+                return HandleErrorResponse(result.Errors);
+            }
+
+            return NoContent();
         }
     }
 }
