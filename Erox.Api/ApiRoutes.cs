@@ -39,5 +39,10 @@
         {
             public const string getById = "{id}";
         }
+
+        public static class Order
+        {
+            public const string getByOrder = "{id}";
+        }
     }
 }

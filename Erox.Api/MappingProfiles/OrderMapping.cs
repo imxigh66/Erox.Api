@@ -11,6 +11,8 @@ namespace Erox.Api.MappingProfiles
         public OrderMapping()
         {
             CreateMap<Order, CreateOrderResponse>();
+            CreateMap<Order, OrderResponse>();
+            CreateMap<OrderItem, OrderItemResponse>();
         }
     }
 }

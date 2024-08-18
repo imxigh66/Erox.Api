@@ -5,11 +5,14 @@ using Erox.Api.Contracts.orders.response;
 using Erox.Api.Extentions;
 using Erox.Api.Filters;
 using Erox.Application.Cards.Command;
+using Erox.Application.Cards.Queries;
 using Erox.Application.Orders.Command;
+using Erox.Application.Orders.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Principal;
 
 namespace Erox.Api.Controllers.V1
 {
@@ -47,6 +50,26 @@ namespace Erox.Api.Controllers.V1
             if (result.IsError) return HandleErrorResponse(result.Errors);
             var mapped = _mapper.Map<CreateOrderResponse>(result.PayLoad);
             return Ok(mapped);
+        }
+
+        [HttpGet]
+        
+        public async Task<IActionResult> GetAllOrder(Guid? orderId, [FromQuery] string? status, [FromQuery] DateTime? createdDate,CancellationToken cancellationToken)
+        {
+            var userId = HttpContext.GetUserProfileIdClaimValue();
+
+            // Создаем запрос
+            var query = new GetOrder
+            {
+                UserId = userId,
+                OrderId = orderId,
+                Status = status,
+                CreatedDate = createdDate 
+            };
+            var result = await _mediator.Send(query, cancellationToken);
+            var mapped= _mapper.Map<List<OrderResponse>>(result.PayLoad);
+            return result.IsError ? HandleErrorResponse(result.Errors) : Ok(mapped);
+            
         }
     }
 }
