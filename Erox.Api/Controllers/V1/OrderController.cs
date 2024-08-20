@@ -101,11 +101,11 @@ namespace Erox.Api.Controllers.V1
 
             var command = new UpdateOrder()
             {
-                ShippingMethod=updatedOrder.ShippingMethod.ToString(),
-                PaymentMethod=updatedOrder.PaymentMethod.ToString(),
-                Status=updatedOrder.Status.ToString(),
-                Address=updatedOrder.Address,
-               
+                ShippingMethod = updatedOrder.ShippingMethod.ToString(),
+                PaymentMethod = updatedOrder.PaymentMethod.ToString(),
+                Status = updatedOrder.Status.ToString(),
+                Address = updatedOrder.Address,
+                OrderId = Guid.Parse(id),
                 Items=updatedOrder.Items,
 
 
