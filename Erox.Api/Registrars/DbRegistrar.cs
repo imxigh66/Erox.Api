@@ -20,7 +20,10 @@ namespace Erox.Api.Registrars
                 Options.Password.RequireNonAlphanumeric = false;
 
             })
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<DataContext>();
+
+
         }
 
         

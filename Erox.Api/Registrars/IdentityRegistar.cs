@@ -53,6 +53,11 @@ namespace Erox.Api.Registrars
                     }
                 };
             });
+            //example
+            //builder.Services.AddAuthorization(options =>
+            //{
+            //    options.AddPolicy("DepartamentPolicy", policy => policy.RequireClaim("departament"));
+            //});
         }
     }
 }

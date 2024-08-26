@@ -15,7 +15,8 @@ namespace Erox.Application.Enums
         UnknownError=999,
         IdentityUserAlredyExists=201,
         IdentityCreationfailed=202,
-       IdentityUserDoesNotExist=203,
+        IdentityRoleAssignmentFailed=205,
+       IdentityUserDoesNotExist =203,
        IncorrectPassword=204,
       
        PostUpdateNotPossible=300,

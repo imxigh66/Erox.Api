@@ -64,7 +64,7 @@ namespace Erox.Api.Controllers.V1
         [HttpDelete]
         [Route(ApiRoutes.Identity.IdentityById)]
         [ValidateGuid("identityUserId")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,Roles ="AppUser")]
         public async Task<IActionResult> DeleteAccount(string identityUserId,CancellationToken cancellationToken)
         {
             var identityUserGuid=Guid.Parse(identityUserId);

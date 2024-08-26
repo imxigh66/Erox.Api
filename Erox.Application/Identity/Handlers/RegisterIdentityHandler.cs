@@ -13,6 +13,7 @@ using Erox.Domain.Exeptions;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -34,13 +35,16 @@ namespace Erox.Application.Identity.Handlers
         private readonly IdentityService _identityService;
         private OperationResult<IdentityUserProfile> _result = new();
         private readonly IMapper _mapper;
-        public RegisterIdentityHandler(DataContext ctx, UserManager<IdentityUser> userManager,IdentityService identityService,IMapper mapper)
+        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly ILogger<RegisterIdentityHandler> _logger;
+        public RegisterIdentityHandler(DataContext ctx, UserManager<IdentityUser> userManager,IdentityService identityService,IMapper mapper, RoleManager<IdentityRole> roleManager, ILogger<RegisterIdentityHandler> logger)
         {
             _ctx = ctx;
             _userManager = userManager;
-         
+         _roleManager= roleManager;
             _identityService = identityService;
             _mapper= mapper;
+            _logger = logger;
         }
 
 
@@ -67,7 +71,7 @@ namespace Erox.Application.Identity.Handlers
                await transaction.CommitAsync(cancellationToken);
                 _result.PayLoad = _mapper.Map<IdentityUserProfile>(profile);
                 _result.PayLoad.UserName = identity.UserName;
-                _result.PayLoad.Token= GetJwtString(identity,profile);
+                _result.PayLoad.Token= await GetJwtString(identity,profile);
                 return _result;
 
             }
@@ -104,6 +108,7 @@ namespace Erox.Application.Identity.Handlers
         {
             var identity=new IdentityUser { Email = request.Username , UserName=request.Username};
             var createdIdentity = await _userManager.CreateAsync(identity, request.Password);
+            
 
             if (!createdIdentity.Succeeded)
             {
@@ -115,6 +120,18 @@ namespace Erox.Application.Identity.Handlers
                    
                 }
               
+            }
+            var resultRole = await _userManager.AddToRoleAsync(identity, "AppUser");
+            if (!resultRole.Succeeded)
+            {
+                await transaction.RollbackAsync(cancellationToken);
+
+                foreach (var roleError in resultRole.Errors)
+                {
+                    _result.AddError(ErrorCode.IdentityRoleAssignmentFailed, roleError.Description);
+                }
+
+                
             }
             return identity;
         }
@@ -139,19 +156,43 @@ namespace Erox.Application.Identity.Handlers
             }
         }
 
-        private string GetJwtString(IdentityUser identity,UserProfileEntity profile)
+      
+        private async Task<string> GetJwtString(IdentityUser identity,UserProfileEntity profile)
         {
-            var claimsIdentity = new ClaimsIdentity(new Claim[]
-              {
-                    new Claim(JwtRegisteredClaimNames.Sub, identity.Email),
-                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                    new Claim(JwtRegisteredClaimNames.Email, identity.Email),
-                    new Claim("IdentityId", identity.Id),
-                    new Claim("UserProfileId", profile.UserProfileId.ToString()),
-              });
+            var claims = new List<Claim>
+             {
+                new Claim(JwtRegisteredClaimNames.Sub, identity.Email),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new Claim(JwtRegisteredClaimNames.Email, identity.Email),
+                new Claim("IdentityId", identity.Id),
+                new Claim("UserProfileId", profile.UserProfileId.ToString())
+             };
+
+            // Получение дополнительных клаймов пользователя
+            var userClaims = await _userManager.GetClaimsAsync(identity);
+            claims.AddRange(userClaims);
+
+            // Получение ролей пользователя и добавление их как клаймов
+            var userRoles = await _userManager.GetRolesAsync(identity);
+            foreach (var userRole in userRoles)
+            {
+                
+
+                // Получение клаймов, связанных с ролями
+                var role = await _roleManager.FindByNameAsync(userRole);
+                if (role != null)
+                {
+                    claims.Add(new Claim(ClaimTypes.Role, userRole));
+                    var roleClaims = await _roleManager.GetClaimsAsync(role);
+                    claims.AddRange(roleClaims);
+                }
+            }
+
+            // Создание JWT-токена
+            var claimsIdentity = new ClaimsIdentity(claims);
             var token = _identityService.CreateSecurityToken(claimsIdentity);
 
-            return  _identityService.WriteToken(token);
+            return _identityService.WriteToken(token);
         }
     }
 }

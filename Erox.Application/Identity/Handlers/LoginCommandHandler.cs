@@ -31,12 +31,14 @@ namespace Erox.Application.Identity.Handlers
         private readonly IMapper _mapper;
         private OperationResult<IdentityUserProfile> _result = new();
         private readonly IdentityService _identityService;
-        public LoginCommandHandler(DataContext ctx,UserManager<IdentityUser> userManager, IdentityService identityService, IMapper mapper)
+        private readonly RoleManager<IdentityRole> _roleManager;    
+        public LoginCommandHandler(DataContext ctx,UserManager<IdentityUser> userManager, IdentityService identityService, IMapper mapper, RoleManager<IdentityRole> roleManager)
         {
                 _ctx = ctx;
             _userManager = userManager;
             _identityService=identityService;
-            _mapper = mapper;   
+            _mapper = mapper;  
+            _roleManager = roleManager;
         }
         public async Task<OperationResult<IdentityUserProfile>> Handle(LoginCommand request, CancellationToken cancellationToken)
         {
@@ -49,7 +51,7 @@ namespace Erox.Application.Identity.Handlers
                 var userProfile = await _ctx.UserProfiles.FirstOrDefaultAsync(up => up.IdentityId == identityUser.Id);
                _result.PayLoad=_mapper.Map<IdentityUserProfile>(userProfile);
                 _result.PayLoad.UserName = identityUser.UserName;
-                _result.PayLoad.Token = GetJwtString(identityUser, userProfile);
+                _result.PayLoad.Token = await GetJwtString(identityUser, userProfile);
                 return _result;
 
 
@@ -83,18 +85,42 @@ namespace Erox.Application.Identity.Handlers
             return identityUser;
         }
 
-        private string GetJwtString(IdentityUser identityUser, UserProfileEntity userProfile)
+        private async Task<string> GetJwtString(IdentityUser identity, UserProfileEntity profile)
         {
-            var claimsIdentity = new ClaimsIdentity(new Claim[]
-               {
-                    new Claim(JwtRegisteredClaimNames.Sub, identityUser.Email),
-                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                    new Claim(JwtRegisteredClaimNames.Email, identityUser.Email),
-                    new Claim("IdentityId", identityUser.Id),
-                    new Claim("UserProfileId", userProfile.UserProfileId.ToString()),
-               });
+            var claims = new List<Claim>
+             {
+                new Claim(JwtRegisteredClaimNames.Sub, identity.Email),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new Claim(JwtRegisteredClaimNames.Email, identity.Email),
+                new Claim("IdentityId", identity.Id),
+                new Claim("UserProfileId", profile.UserProfileId.ToString())
+             };
+
+            // Получение дополнительных клаймов пользователя
+            var userClaims = await _userManager.GetClaimsAsync(identity);
+            claims.AddRange(userClaims);
+
+            // Получение ролей пользователя и добавление их как клаймов
+            var userRoles = await _userManager.GetRolesAsync(identity);
+            foreach (var userRole in userRoles)
+            {
+
+
+                // Получение клаймов, связанных с ролями
+                var role = await _roleManager.FindByNameAsync(userRole);
+                if (role != null)
+                {
+                    claims.Add(new Claim(ClaimTypes.Role, userRole));
+                    var roleClaims = await _roleManager.GetClaimsAsync(role);
+                    claims.AddRange(roleClaims);
+                }
+            }
+
+            // Создание JWT-токена
+            var claimsIdentity = new ClaimsIdentity(claims);
             var token = _identityService.CreateSecurityToken(claimsIdentity);
-            return  _identityService.WriteToken(token);
+
+            return _identityService.WriteToken(token);
         }
     }
 }

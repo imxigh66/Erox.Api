@@ -16,7 +16,6 @@ namespace Erox.Api.Controllers.V1
     [ApiVersion("1.0")]
     [Route(ApiRoutes.BaseRoute)]
     [ApiController]
-    [Authorize(AuthenticationSchemes=JwtBearerDefaults.AuthenticationScheme)]
     public class UserProfileController : BaseController
     {
         private readonly IMediator _mediator;
@@ -28,13 +27,14 @@ namespace Erox.Api.Controllers.V1
         }
 
         [HttpGet]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         public async Task<IActionResult> GetAllProfiles(CancellationToken cancellationToken)
         {
             
 
             var query = new GetAllUserProfiles();   
             var response=await _mediator.Send(query, cancellationToken);
-            var profiles=_mapper.Map<List<UserProfileResponse>>(response);
+            var profiles=_mapper.Map<List<UserProfileResponse>>(response.PayLoad);
             return Ok(profiles);
         }
 
@@ -45,6 +45,7 @@ namespace Erox.Api.Controllers.V1
         [Route(ApiRoutes.UserProfile.IdRoute)]
         [HttpGet]
         [ValidateGuid("id")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "AppUser")]
         public async Task<IActionResult> GetUserProfileById(string id, CancellationToken cancellationToken)
         {
             var quary = new GetAllUserProfilesbyId { UserProfileId = Guid.Parse(id) };
@@ -61,6 +62,7 @@ namespace Erox.Api.Controllers.V1
         [Route(ApiRoutes.UserProfile.IdRoute)]
         [ValidateModel]
         [ValidateGuid("id")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "AppUser")]
         public async Task<IActionResult> UpdateUserProfile(string id,UserProfileCreateUpdate updateProfile, CancellationToken cancellationToken)
         {
             var command =_mapper.Map<UpdateUserInfoBasic>(updateProfile);

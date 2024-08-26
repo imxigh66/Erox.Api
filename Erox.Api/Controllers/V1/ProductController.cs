@@ -34,6 +34,7 @@ namespace Erox.Api.Controllers.V1
         [HttpGet]
         [Route(ApiRoutes.Product.getById)]
         [ValidateGuid("id")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetById(string id, CancellationToken cancellationToken)
         {
             var productId = Guid.Parse(id);
@@ -47,7 +48,8 @@ namespace Erox.Api.Controllers.V1
 
         [HttpPost]
         [ValidateModel]
-        public async Task<IActionResult> CreatePost([FromBody] ProductCreate newProduct, CancellationToken cancellationToken)
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
+        public async Task<IActionResult> CreateProduct([FromBody] ProductCreate newProduct, CancellationToken cancellationToken)
         {
             
             var command = new CreateProduct
@@ -72,6 +74,7 @@ namespace Erox.Api.Controllers.V1
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAllProducts(CancellationToken cancellationToken)
         {
             var result = await _mediator.Send(new GetAllProducts(), cancellationToken);
@@ -83,6 +86,7 @@ namespace Erox.Api.Controllers.V1
         [Route(ApiRoutes.Product.getById)]
         [ValidateGuid("id")]
         [ValidateModel]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         public async Task<IActionResult> UpdateProduct([FromBody] ProductCreate updatedProduct, string id, CancellationToken cancellationToken)
         {
             
@@ -112,6 +116,7 @@ namespace Erox.Api.Controllers.V1
         [HttpDelete]
         [Route(ApiRoutes.Product.getById)]
         [ValidateGuid("id")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         public async Task<IActionResult> DeletePost(string id, CancellationToken cancellationToken)
         {
            
@@ -124,7 +129,7 @@ namespace Erox.Api.Controllers.V1
         [Route(ApiRoutes.Product.ProductReview)]
         [ValidateGuid("productId")]
         [ValidateModel]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,Roles ="AppUser")]
         public async Task<IActionResult> AddProductReview(string productId, [FromBody] ProductReviewCreate review, CancellationToken cancellationToken)
         {
             var userProfileId = HttpContext.GetUserProfileIdClaimValue();
@@ -158,6 +163,7 @@ namespace Erox.Api.Controllers.V1
         [HttpDelete]
         [Route(ApiRoutes.Product.ReviewById)]
         [ValidateGuid("productId", "reviewId")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         public async Task<IActionResult> RemoveReviewFromProduct(string productId, string reviewId, CancellationToken cancellationToken)
         {
             var userProfileId = HttpContext.GetUserProfileIdClaimValue();
@@ -178,6 +184,7 @@ namespace Erox.Api.Controllers.V1
 
         [HttpGet]
         [Route(ApiRoutes.Product.ProductReview)]
+        [AllowAnonymous]
         public async Task<IActionResult> GetReviewById(string productId, CancellationToken cancellationToken)
         {
             var query = new GetReviewByProductId() { ProductId = Guid.Parse(productId) };

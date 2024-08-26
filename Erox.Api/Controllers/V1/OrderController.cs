@@ -21,7 +21,7 @@ namespace Erox.Api.Controllers.V1
     [ApiVersion("1.0")]
     [Route(ApiRoutes.BaseRoute)]
     [ApiController]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    
     public class OrderController : BaseController
     {
         private readonly IMediator _mediator;
@@ -34,6 +34,7 @@ namespace Erox.Api.Controllers.V1
 
         [HttpPost]
         [ValidateModel]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "AppUser")]
         public async Task<IActionResult> AddToOrder([FromBody] CreateOrderRequest req, CancellationToken cancellationToken)
         {
             var userId = HttpContext.GetUserProfileIdClaimValue();
@@ -55,7 +56,7 @@ namespace Erox.Api.Controllers.V1
         }
 
         [HttpGet]
-        
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         public async Task<IActionResult> GetOrderByFilters(Guid? orderId, [FromQuery] string? status, [FromQuery] DateTime? createdDate,CancellationToken cancellationToken)
         {
             var userId = HttpContext.GetUserProfileIdClaimValue();
@@ -77,6 +78,7 @@ namespace Erox.Api.Controllers.V1
         [HttpDelete]
         [Route(ApiRoutes.Order.getByOrder)]
         [ValidateGuid("id")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "AppUser")]
         public async Task<IActionResult> RemoveFromOrder(string id, CancellationToken cancellationToken)
         {
             
@@ -95,6 +97,7 @@ namespace Erox.Api.Controllers.V1
         [Route(ApiRoutes.Order.getByOrder)]
         [ValidateGuid("id")]
         [ValidateModel]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         public async Task<IActionResult> UpdateOrder([FromBody] UpdateOrderRequest updatedOrder, string id, CancellationToken cancellationToken)
         {
 
