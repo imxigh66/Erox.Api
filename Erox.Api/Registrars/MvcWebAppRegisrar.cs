@@ -20,7 +20,7 @@ namespace Erox.Api.Registrars
             app.UseHttpsRedirection();
             app.UseCookiePolicy(new CookiePolicyOptions
             {
-                MinimumSameSitePolicy=SameSiteMode.Strict,
+                MinimumSameSitePolicy=SameSiteMode.Lax,
                 HttpOnly=HttpOnlyPolicy.Always,
                 Secure=CookieSecurePolicy.Always
             });

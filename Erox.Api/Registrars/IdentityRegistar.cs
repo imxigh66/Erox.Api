@@ -58,6 +58,16 @@ namespace Erox.Api.Registrars
             //{
             //    options.AddPolicy("DepartamentPolicy", policy => policy.RequireClaim("departament"));
             //});
+
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowSpecificOrigin",
+                    builder => builder
+                        .WithOrigins("http://localhost:5173") // Замените на ваш фронтенд URL
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .AllowCredentials()); // Разрешает отправку куки
+            });
         }
     }
 }
