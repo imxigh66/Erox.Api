@@ -126,5 +126,7 @@ namespace Erox.Api.Controllers.V1
             }
             return BadRequest(new { error = $"Unable to remove User {email} from role {role}" });
         }
+
+       
     }
 }

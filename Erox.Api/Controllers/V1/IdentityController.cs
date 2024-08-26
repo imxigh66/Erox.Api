@@ -19,10 +19,14 @@ namespace Erox.Api.Controllers.V1
     {
         private readonly IMediator _mediator;
         private readonly IMapper _mapper;
-        public IdentityController(IMediator mediator, IMapper mapper)
+        private readonly UserManager<IdentityUser> _userManager;
+       
+        public IdentityController(IMediator mediator, IMapper mapper, UserManager<IdentityUser> userManager)
         {
             _mapper = mapper;
             _mediator = mediator;
+            _userManager = userManager;
+            
         }
 
 
@@ -100,6 +104,20 @@ namespace Erox.Api.Controllers.V1
             return Ok(_mapper.Map<IdentityUserProfile>(result.PayLoad));
         }
 
+        [HttpGet]
+        [Route("GetRoleByUser")]
+        public async Task<IActionResult> GetRoleByUser(string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
 
+            if (user == null)
+            {
+                return NotFound("User not found");
+            }
+
+            var roles = await _userManager.GetRolesAsync(user);
+
+            return Ok(new { roles });
+        }
     }
 }
