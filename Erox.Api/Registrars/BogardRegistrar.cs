@@ -1,4 +1,5 @@
 ﻿
+using Erox.Api.MappingProfiles;
 using Erox.Application.UserProfile.Queries;
 using MediatR;
 
@@ -10,6 +11,7 @@ namespace Erox.Api.Registrars
         {
             builder.Services.AddAutoMapper(typeof(Program),typeof(GetAllUserProfiles));
             builder.Services.AddMediatR(typeof(GetAllUserProfiles));
+           
         }
     }
 }

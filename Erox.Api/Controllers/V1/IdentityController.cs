@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using Erox.Api.Contracts.identity;
+using Erox.Api.Contracts.userprofile.requests;
 using Erox.Api.Extentions;
 using Erox.Api.Filters;
 using Erox.Application.Identity.Commands;
 using Erox.Application.Identity.Queries;
+using Erox.Application.UserProfile.Commands;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -87,7 +89,7 @@ namespace Erox.Api.Controllers.V1
 
         [HttpGet]
         [Route(ApiRoutes.Identity.CurrentUser)]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "AppUser")]
         public async Task<IActionResult> CurrentUser(CancellationToken cancellationToken)
         {
             var userProfileId = HttpContext.GetUserProfileIdClaimValue();
@@ -111,6 +113,7 @@ namespace Erox.Api.Controllers.V1
 
         [HttpGet]
         [Route("GetRoleByUser")]
+
         public async Task<IActionResult> GetRoleByUser(string email)
         {
             var user = await _userManager.FindByEmailAsync(email);
@@ -124,5 +127,28 @@ namespace Erox.Api.Controllers.V1
 
             return Ok(new { roles });
         }
+
+
+        [HttpPatch]
+
+     
+        [Route("UpdateUserProfile")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "AppUser")]
+        public async Task<IActionResult> UpdateUserProfile(UserProfileCreateUpdate updateProfile, CancellationToken cancellationToken)
+        {
+            if (updateProfile == null)
+            {
+                return BadRequest("Profile data is missing.");
+            }
+
+            var userId = HttpContext.User.FindFirst("UserProfileId")?.Value;
+            var command = _mapper.Map<UpdateUserInfoBasic>(updateProfile);
+            command.UserProfileId = Guid.Parse(userId);
+            var response = await _mediator.Send(command, cancellationToken);
+            Console.WriteLine($"Email received: {updateProfile.EmailAddress}");
+
+            return response.IsError ? HandleErrorResponse(response.Errors) : NoContent();
+        }
+
     }
 }

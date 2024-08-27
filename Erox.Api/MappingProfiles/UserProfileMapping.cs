@@ -14,7 +14,7 @@ namespace Erox.Api.MappingProfiles
         public UserProfileMapping()
         {
             
-            CreateMap<UserProfileCreateUpdate, UpdateUserInfoBasic>();
+            
             CreateMap<UserProfileEntity,UserProfileResponse>();
 
             //CreateMap<OperationResult<IEnumerable<UserProfiles>>, List<UserProfileResponse>>()

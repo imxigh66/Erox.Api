@@ -10,6 +10,7 @@ namespace Erox.Api.MappingProfiles
         public ProductMapping()
         {
             CreateMap<Product, ProductResponce>();
+           
             CreateMap<ProductReview,ProductReviewResponse>();
             CreateMap<ProductSize, ProductSizeResponse>();
         }

@@ -5,6 +5,7 @@ using Erox.Api.Contracts.product.requests;
 using Erox.Api.Contracts.product.responses;
 using Erox.Api.Extentions;
 using Erox.Api.Filters;
+using Erox.Application.Orders.Queries;
 using Erox.Application.Posts.Commands;
 using Erox.Application.Posts.Queries;
 using Erox.Application.Products.Command;
@@ -25,22 +26,51 @@ namespace Erox.Api.Controllers.V1
     {
         private readonly IMediator _mediator;
         private readonly IMapper _mapper;
-        public ProductController(IMapper mapper, IMediator mediator)
+        private readonly ILogger<ProductController> _logger;
+        public ProductController(IMapper mapper, IMediator mediator, ILogger<ProductController> logger)
         {
             _mapper = mapper;
             _mediator = mediator;
+            _logger = logger;   
         }
 
+        //[HttpGet]
+        //[Route(ApiRoutes.Product.getById)]
+        //[ValidateGuid("id")]
+        //[AllowAnonymous]
+        //public async Task<IActionResult> GetById(string id, CancellationToken cancellationToken)
+        //{
+        //    var productId = Guid.Parse(id);
+        //    var query = new GetProductById() { ProductId=productId };
+        //    var result = await _mediator.Send(query, cancellationToken);
+        //    var mapped = _mapper.Map<ProductResponce>(result.PayLoad);
+
+        //    return result.IsError ? HandleErrorResponse(result.Errors) : Ok(mapped);
+
+        //}
         [HttpGet]
-        [Route(ApiRoutes.Product.getById)]
-        [ValidateGuid("id")]
+       
         [AllowAnonymous]
-        public async Task<IActionResult> GetById(string id, CancellationToken cancellationToken)
+        public async Task<IActionResult> GetByFilter(string? category,string? color,string? season,string? code,decimal? price, CancellationToken cancellationToken)
         {
-            var productId = Guid.Parse(id);
-            var query = new GetProductById() { ProductId=productId };
+            
+            
+            var query = new GetProductByFilter() { 
+                Category=category,
+                Color=color,
+                Season=season,
+                Code=code,
+                Price=price,
+            };
             var result = await _mediator.Send(query, cancellationToken);
-            var mapped = _mapper.Map<ProductResponce>(result.PayLoad);
+            if (result.PayLoad == null || result.PayLoad.Length == 0)
+            {
+                return NotFound("No products found.");
+            }
+
+            // Логирование для отладки
+            _logger.LogInformation($"Количество продуктов: {result.PayLoad.Length}");
+            var mapped = _mapper.Map<ProductResponce[]>(result.PayLoad);
 
             return result.IsError ? HandleErrorResponse(result.Errors) : Ok(mapped);
 

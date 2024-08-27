@@ -10,6 +10,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Erox.Api.Controllers.V1
 {
@@ -58,18 +59,19 @@ namespace Erox.Api.Controllers.V1
             return Ok(userProfile);
         }
 
-        [HttpPatch]
-        [Route(ApiRoutes.UserProfile.IdRoute)]
-        [ValidateModel]
-        [ValidateGuid("id")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "AppUser")]
-        public async Task<IActionResult> UpdateUserProfile(string id,UserProfileCreateUpdate updateProfile, CancellationToken cancellationToken)
-        {
-            var command =_mapper.Map<UpdateUserInfoBasic>(updateProfile);
-            command.UserProfileId=Guid.Parse(id);
-            var response=await _mediator.Send(command, cancellationToken);
-            return response.IsError ? HandleErrorResponse(response.Errors) : NoContent();
-        }
+        //[HttpPatch]
+        
+        //[ValidateModel]
+      
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "AppUser")]
+        //public async Task<IActionResult> UpdateUserProfile(UserProfileCreateUpdate updateProfile, CancellationToken cancellationToken)
+        //{
+        //    var userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        //    var command =_mapper.Map<UpdateUserInfoBasic>(updateProfile);
+        //    command.UserProfileId=Guid.Parse(userId);
+        //    var response=await _mediator.Send(command, cancellationToken);
+        //    return response.IsError ? HandleErrorResponse(response.Errors) : NoContent();
+        //}
 
      
     }

@@ -12,11 +12,11 @@ namespace Erox.Application.UserProfile.Commands
     public class UpdateUserInfoBasic:IRequest<OperationResult<UserProfileEntity>>
     {
         public Guid UserProfileId { get; set; } 
-        public string Firstname { get; private set; }
-        public string Lastname { get; private set; }
-        public string EmailAddress { get; private set; }
-        public string Phone { get; private set; }
-        public DateTime DateOfBirth { get; private set; }
-        public string CurrentCity { get; private set; }
+        public string Firstname { get;  set; }
+        public string Lastname { get;  set; }
+        public string EmailAddress { get;  set; }
+        public string Phone { get;  set; }
+        public DateTime DateOfBirth { get;  set; }
+        public string CurrentCity { get;  set; }
     }
 }

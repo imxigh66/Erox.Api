@@ -22,7 +22,7 @@ namespace Erox.Api.Registrars
             {
                 MinimumSameSitePolicy=SameSiteMode.Lax,
                 HttpOnly=HttpOnlyPolicy.Always,
-                Secure=CookieSecurePolicy.Always
+                //Secure=CookieSecurePolicy.Always
             });
 
             app.UseAuthentication();

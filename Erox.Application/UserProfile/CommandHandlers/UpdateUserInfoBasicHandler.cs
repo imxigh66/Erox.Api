@@ -34,7 +34,7 @@ namespace Erox.Application.UserProfile.CommandHandlers
                     result.AddError(Enums.ErrorCode.NotFound, string.Format(UserProfileErrorMessage.UserProfileNotFound, request.UserProfileId));
                     return result;
                 }
-                var basicInfo = BasicInfo.CreateBasicInfo(request.Firstname, request.Lastname, request.Phone, request.CurrentCity, request.DateOfBirth, request.EmailAddress);
+                var basicInfo = BasicInfo.CreateBasicInfo( request.Firstname, request.Lastname, request.EmailAddress, request.Phone, request.DateOfBirth, request.CurrentCity);
                 userProfile.UpdateBasicInfo(basicInfo);
                 _ctx.UserProfiles.Update(userProfile);
                 await _ctx.SaveChangesAsync(cancellationToken);

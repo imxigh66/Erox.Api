@@ -14,8 +14,8 @@ namespace Erox.Api.Contracts.userprofile.requests
         [MaxLength(50)]
         public string Lastname { get; set; }
 
-        [EmailAddress]
         [Required]
+        [EmailAddress]
         public string EmailAddress { get; set; }
         public string Phone { get; set; }
 
