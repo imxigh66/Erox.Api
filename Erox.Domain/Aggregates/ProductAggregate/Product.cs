@@ -1,5 +1,8 @@
-﻿using Erox.Domain.Aggregates.PostAggregate;
+﻿using Erox.Domain.Aggregates.CardAggregate;
+using Erox.Domain.Aggregates.OrderAggregate;
+using Erox.Domain.Aggregates.PostAggregate;
 using Erox.Domain.Aggregates.UsersProfiles;
+using Erox.Domain.Aggregates.WishlistAggregate;
 using Erox.Domain.Exeptions;
 using Erox.Domain.Validators.PostValidators;
 using Erox.Domain.Validators.ProductValidators;
@@ -32,6 +35,9 @@ namespace Erox.Domain.Aggregates.ProductAggregate
         public DateTime LastModified { get; private set; }
         public IEnumerable<ProductReview> Reviews { get { return _reviews; } }
         public IEnumerable<ProductSize> Sizes {  get { return _sizes; } }
+        public IEnumerable<OrderItem> OrderItems { get; set; }
+        public IEnumerable<CardItem> CardItems { get; set; }
+        public IEnumerable<WishlistItem> WishlistItems { get; set; }
 
 
 

@@ -17,10 +17,10 @@ namespace Erox.DataAccess.Configuarations
 
             builder.HasIndex(i => new { i.ProductId, i.Size }).IsUnique();
 
-            builder.HasOne(p => p.Product)
-              .WithMany(p => p.Sizes)
-              .HasForeignKey(pr => pr.ProductId)
-              .OnDelete(DeleteBehavior.Cascade);
+            builder .HasOne(p => p.Product)
+                    .WithMany(p => p.Sizes)
+                    .HasForeignKey(pr => pr.ProductId)
+                    .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

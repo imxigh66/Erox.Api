@@ -15,36 +15,43 @@ using System.Threading.Tasks;
 
 namespace Erox.Application.Products.CommandHandler
 {
-    public class DeleteProductHandler : IRequestHandler<DeleteProduct, OperationResult<Product>>
-    {
-        private readonly DataContext _ctx;
-        public DeleteProductHandler(DataContext ctx)
-        {
-                _ctx = ctx;
-        }
-        public async Task<OperationResult<Product>> Handle(DeleteProduct request, CancellationToken cancellationToken)
-        {
-            var result = new OperationResult<Product>();
-            try
-            {
-                var product = await _ctx.Products.FirstOrDefaultAsync(p => p.ProductId == request.ProductId);
-                if (product is null)
-                {
+	public class DeleteProductHandler : IRequestHandler<DeleteProduct, OperationResult<Product>>
+	{
+		private readonly DataContext _ctx;
+		public DeleteProductHandler(DataContext ctx)
+		{
+			_ctx = ctx;
+		}
+		public async Task<OperationResult<Product>> Handle(DeleteProduct request, CancellationToken cancellationToken)
+		{
+			var result = new OperationResult<Product>();
+			try
+			{
+				var includedProducts = _ctx.Products.Include(i => i.Sizes)
+													.Include(i => i.CardItems)
+													.Include(i => i.OrderItems)
+													.Include(i => i.WishlistItems)
+													.Include(i => i.Reviews)
+													;
 
-                    result.AddError(ErrorCode.NotFound, string.Format(ProductsErrorMessage.ProductNotFound, request.ProductId));
-                    return result;
-                }
+				var product = await includedProducts.FirstOrDefaultAsync(p => p.ProductId == request.ProductId);
+				if (product is null)
+				{
 
-                
-                _ctx.Products.Remove(product);
-                await _ctx.SaveChangesAsync(cancellationToken);
-                result.PayLoad =product;
-            }
-            catch (Exception e)
-            {
-                result.AddUnknownError(e.Message);
-            }
-            return result;
-        }
-    }
+					result.AddError(ErrorCode.NotFound, string.Format(ProductsErrorMessage.ProductNotFound, request.ProductId));
+					return result;
+				}
+
+
+				_ctx.Products.Remove(product);
+				await _ctx.SaveChangesAsync(cancellationToken);
+				result.PayLoad = product;
+			}
+			catch (Exception e)
+			{
+				result.AddUnknownError(e.Message);
+			}
+			return result;
+		}
+	}
 }

@@ -48,6 +48,7 @@ namespace Erox.Api.Controllers.V1
 
         [HttpPost]
         [ValidateModel]
+        [Route("CreatePost")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         public async Task<IActionResult> CreateProduct([FromBody] ProductCreate newProduct, CancellationToken cancellationToken)
         {
@@ -74,6 +75,7 @@ namespace Erox.Api.Controllers.V1
         }
 
         [HttpGet]
+        [Route("GetAllProducts")]
         [AllowAnonymous]
         public async Task<IActionResult> GetAllProducts(CancellationToken cancellationToken)
         {
@@ -117,7 +119,7 @@ namespace Erox.Api.Controllers.V1
         [Route(ApiRoutes.Product.getById)]
         [ValidateGuid("id")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
-        public async Task<IActionResult> DeletePost(string id, CancellationToken cancellationToken)
+        public async Task<IActionResult> DeleteProduct(string id, CancellationToken cancellationToken)
         {
            
             var command = new DeleteProduct() { ProductId = Guid.Parse(id)};

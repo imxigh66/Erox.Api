@@ -16,7 +16,8 @@ namespace Erox.DataAccess.Configuarations
         {
             builder.HasMany(w => w.Items)
                 .WithOne(wi => wi.Wishlist)
-                .HasForeignKey(wi => wi.WishlistId);
+                .HasForeignKey(wi => wi.WishlistId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

@@ -14,10 +14,10 @@ namespace Erox.DataAccess.Configuarations
     {
         public void Configure(EntityTypeBuilder<WishlistItem> builder)
         {
-           builder
-        .HasOne(wi => wi.Product)
-        .WithMany()
-        .HasForeignKey(wi => wi.ProductId);
+           builder  .HasOne(wi => wi.Product)
+                    .WithMany(m => m.WishlistItems)
+                    .HasForeignKey(wi => wi.ProductId)
+                    .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

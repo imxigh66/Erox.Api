@@ -15,6 +15,7 @@ namespace Erox.Domain.Aggregates.ProductAggregate
        
         public Guid ReviewId { get; private set; }
         public Guid Productid { get; private set; }
+        public Product Product { get; private set; }
         public string Text { get; private set; }
         public Guid UserProfieId { get; private set; }
         public string Rating { get; private set; }
