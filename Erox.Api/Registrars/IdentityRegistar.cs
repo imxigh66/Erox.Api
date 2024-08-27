@@ -63,7 +63,7 @@ namespace Erox.Api.Registrars
             {
                 options.AddPolicy("AllowSpecificOrigin",
                     builder => builder
-                        .WithOrigins("http://localhost:5173") // Замените на ваш фронтенд URL
+                        .WithOrigins("http://192.168.0.5:888") // Замените на ваш фронтенд URL
                         .AllowAnyHeader()
                         .AllowAnyMethod()
                         .AllowCredentials()); // Разрешает отправку куки
