@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Erox.Api.Controllers.V1
 {
@@ -91,6 +92,10 @@ namespace Erox.Api.Controllers.V1
         {
             var userProfileId = HttpContext.GetUserProfileIdClaimValue();
             var claimsPrincipal = HttpContext.User;
+            //foreach (var claim in claimsPrincipal)
+            //{
+            //    Console.WriteLine($"{claim.Type}: {claim.Value}");
+            //}
             var query = new GetCurrentUser
             {
                 userProfileId = userProfileId,
