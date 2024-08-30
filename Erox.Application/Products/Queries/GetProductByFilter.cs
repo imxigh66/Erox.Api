@@ -11,7 +11,7 @@ namespace Erox.Application.Products.Queries
 {
     public class GetProductByFilter : IRequest<OperationResult<Product[]>>
     {
-       
+       public Guid? ProductId { get; set; }
        public string? Category {  get; set; }
        
         public string? Color { get; set; }

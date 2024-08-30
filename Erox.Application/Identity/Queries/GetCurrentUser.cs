@@ -12,7 +12,7 @@ namespace Erox.Application.Identity.Queries
 {
     public class GetCurrentUser:IRequest<OperationResult<IdentityUserProfile>>
     {
-        public Guid userProfileId {  get; set; }
+        public Guid UserProfileId {  get; set; }
         public ClaimsPrincipal ClaimsPrincipal { get; set; }
     }
 }

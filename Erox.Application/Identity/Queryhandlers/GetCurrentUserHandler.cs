@@ -60,7 +60,7 @@ namespace Erox.Application.Identity.Queryhandlers
             }
 
             // Ищем профиль пользователя
-            var profile = await _ctx.UserProfiles.FirstOrDefaultAsync(up => up.UserProfileId == request.userProfileId, cancellationToken);
+            var profile = await _ctx.UserProfiles.FirstOrDefaultAsync(up => up.UserProfileId == request.UserProfileId, cancellationToken);
             if (profile == null)
             {
                 _result.AddError(Enums.ErrorCode.NotFound, "Profile not found.");

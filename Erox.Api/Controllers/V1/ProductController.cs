@@ -49,18 +49,31 @@ namespace Erox.Api.Controllers.V1
 
         //}
         [HttpGet]
-       
+        [Route("GetProductsByFilters")]
         [AllowAnonymous]
-        public async Task<IActionResult> GetByFilter(string? category,string? color,string? season,string? code,decimal? price, CancellationToken cancellationToken)
+        public async Task<IActionResult> GetByFilter(string? id,string? category,string? color,string? season,string? code,decimal? price, CancellationToken cancellationToken)
         {
-            
-            
+            Guid? productId = null;
+
+            if (!string.IsNullOrEmpty(id))
+            {
+                if (Guid.TryParse(id, out var parsedId))
+                {
+                    productId = parsedId;
+                }
+                else
+                {
+                    return BadRequest("Invalid ID format.");
+                }
+            }
+
             var query = new GetProductByFilter() { 
                 Category=category,
                 Color=color,
                 Season=season,
                 Code=code,
                 Price=price,
+                ProductId=productId
             };
             var result = await _mediator.Send(query, cancellationToken);
             if (result.PayLoad == null || result.PayLoad.Length == 0)

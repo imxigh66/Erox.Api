@@ -44,12 +44,16 @@ namespace Erox.Application.Products.QueryHandler
             try
             {
                 // Фильтрация заказа по переданным параметрам
-                var query =   _ctx.Products.AsQueryable();
+                var query =   _ctx.Products.Include(i => i.Sizes).AsQueryable();
 
                 // Фильтр по UserId
                 if (request.Category != null)
                 {
                     query = query.Where(o => o.Category == request.Category);
+                }
+                if (request.ProductId != null)
+                {
+                    query = query.Where(o => o.ProductId == request.ProductId);
                 }
 
                 // Фильтр по OrderId
