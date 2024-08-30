@@ -31,7 +31,7 @@ namespace Erox.Application.Cards.QueryHandler
 
             if (card == null)
             {
-                _result.AddError(ErrorCode.NotFound, "Wishlist not found.");
+                _result.AddError(ErrorCode.NotFound, "Cart not found.");
                 return _result;
             }
 

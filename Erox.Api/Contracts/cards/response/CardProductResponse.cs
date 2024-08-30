@@ -1,4 +1,5 @@
-﻿using Erox.Domain.Aggregates.ProductAggregate;
+﻿using Erox.Api.Contracts.product.responses;
+using Erox.Domain.Aggregates.ProductAggregate;
 
 namespace Erox.Api.Contracts.cards.response
 {
@@ -7,6 +8,6 @@ namespace Erox.Api.Contracts.cards.response
         public Guid ProductId { get; set; }
         public string Color { get; set; }
         public int Quantity { get; set; }
-        public ProductSize Size { get; set; }   
+        public ProductSizeResponse[] Sizes { get; set; }
     }
 }
