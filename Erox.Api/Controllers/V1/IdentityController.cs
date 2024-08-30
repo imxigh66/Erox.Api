@@ -100,7 +100,7 @@ namespace Erox.Api.Controllers.V1
             //}
             var query = new GetCurrentUser
             {
-                userProfileId = userProfileId,
+                UserProfileId = userProfileId,
                 ClaimsPrincipal = claimsPrincipal
             };
             var result = await _mediator.Send(query, cancellationToken);

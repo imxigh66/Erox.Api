@@ -8,6 +8,7 @@ namespace Erox.Application.Identity.Dtos
 {
     public class IdentityUserProfile
     {
+        public Guid UserProfileId { get; set; }
         public string UserName { get; set; }
         public string Firstname { get; set; }
         public string Lastname { get; set; }
