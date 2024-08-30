@@ -26,7 +26,8 @@ namespace Erox.Application.Cards.QueryHandler
         {
             var card = await _ctx.Cards
                 .Include(w => w.Items)
-                .ThenInclude(wi => wi.Product)  // Загружаем связанные продукты
+                .ThenInclude(wi => wi.Product)
+                .ThenInclude(wi => wi.Sizes) // Загружаем связанные продукты
                 .FirstOrDefaultAsync(w => w.UserId == request.UserId, cancellationToken);
 
             if (card == null)

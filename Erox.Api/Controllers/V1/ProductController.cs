@@ -188,7 +188,8 @@ namespace Erox.Api.Controllers.V1
                 Rating = review.Rating,
                 IsApproved = review.IsApproved,
                 Text = review.Text,
-                
+                UserProfileId = userProfileId
+
             };
 
             var result = await _mediator.Send(command, cancellationToken);

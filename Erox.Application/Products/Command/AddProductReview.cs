@@ -11,6 +11,7 @@ namespace Erox.Application.Products.Command
       
         public string Rating { get; set; }
         public bool IsApproved { get; set; }
+        public Guid UserProfileId { get; set; }
       
     }
 }

@@ -56,7 +56,6 @@ namespace Erox.Api.Controllers.V1
         }
 
         [HttpGet]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         public async Task<IActionResult> GetOrderByFilters(Guid? orderId, [FromQuery] string? status, [FromQuery] DateTime? createdDate,CancellationToken cancellationToken)
         {
             var userId = HttpContext.GetUserProfileIdClaimValue();
