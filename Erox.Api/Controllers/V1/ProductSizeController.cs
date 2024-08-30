@@ -3,8 +3,10 @@ using Erox.Api.Contracts.product.requests;
 using Erox.Api.Contracts.product.responses;
 using Erox.Api.Filters;
 using Erox.Application.Products.Command;
+using Erox.Application.Products.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System.Drawing;
 using static Erox.Api.ApiRoutes;
 
 namespace Erox.Api.Controllers.V1
@@ -42,6 +44,32 @@ namespace Erox.Api.Controllers.V1
             var mapped = _mapper.Map<ProductSizeResponse[]>(result.PayLoad);
 
             return Ok(mapped);
+        }
+
+
+        [HttpGet]
+        [Route(ApiRoutes.Product.getById)]
+        [ValidateGuid("id")]
+        public async Task<IActionResult> GetSizesByProductId(string id, CancellationToken cancellationToken)
+        {
+
+            var productId = Guid.Parse(id);
+            var query = new GetSizesByProductId()
+            {
+                
+                ProductId = productId
+            };
+            var result = await _mediator.Send(query, cancellationToken);
+            if (result.PayLoad == null || result.PayLoad.Length == 0)
+            {
+                return NotFound("No size found.");
+            }
+
+            // Логирование для отладки
+           
+            var mapped = _mapper.Map<GetSizesByProductsIdResponse>(result.PayLoad);
+
+            return result.IsError ? HandleErrorResponse(result.Errors) : Ok(mapped);
         }
     }
 }

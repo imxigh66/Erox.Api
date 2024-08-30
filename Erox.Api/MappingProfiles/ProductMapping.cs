@@ -13,6 +13,8 @@ namespace Erox.Api.MappingProfiles
            
             CreateMap<ProductReview,ProductReviewResponse>();
             CreateMap<ProductSize, ProductSizeResponse>();
+            CreateMap<ProductSize[], GetSizesByProductsIdResponse>()
+    .ForMember(dest => dest.Sizes, opt => opt.MapFrom(src => src));
         }
     }
 }
