@@ -46,7 +46,7 @@ namespace Erox.Api.Controllers.V1
         [Route(ApiRoutes.UserProfile.IdRoute)]
         [HttpGet]
         [ValidateGuid("id")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "AppUser")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         public async Task<IActionResult> GetUserProfileById(string id, CancellationToken cancellationToken)
         {
             var quary = new GetAllUserProfilesbyId { UserProfileId = Guid.Parse(id) };
