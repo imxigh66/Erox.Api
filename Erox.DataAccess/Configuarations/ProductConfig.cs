@@ -38,6 +38,8 @@ namespace Erox.DataAccess.Configuarations
 					.WithOne(o => o.Product)
 					.HasForeignKey(fk => fk.ProductId)
 					.OnDelete(DeleteBehavior.Cascade);
-		}
+
+           
+        }
 	}
 }

@@ -12,7 +12,7 @@ namespace Erox.Application.Products.Queries
     public class GetProductByFilter : IRequest<OperationResult<Product[]>>
     {
        public Guid? ProductId { get; set; }
-       public string? Category {  get; set; }
+       public Guid? CategoryId {  get; set; }
        
         public string? Color { get; set; }
         public string? Season { get; set; }

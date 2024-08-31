@@ -22,7 +22,7 @@ namespace Erox.Application.Products.Command
         public decimal Price { get; set; }
         public decimal DiscountPrice { get; set; }
 
-        public string Category { get; set; }
+        public Guid CategoryId { get; set; }
 
         public string Color { get; set; }
 

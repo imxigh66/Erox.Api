@@ -38,7 +38,7 @@ namespace Erox.Application.Products.CommandHandler
                     result.AddError(ErrorCode.NotFound, string.Format(ProductsErrorMessage.ProductNotFound, request.ProductId));
                     return result;
                 }
-                product.UpdateProducts(request.Name, request.Description, request.Price, request.DiscountPrice, request.Category, request.Color, request.Image,request.Season, request.Code);
+                product.UpdateProducts(request.Name, request.Description, request.Price, request.DiscountPrice, request.CategoryId, request.Color, request.Image,request.Season, request.Code);
                 await _ctx.SaveChangesAsync(cancellationToken);
                 result.PayLoad = product;
                 return result;

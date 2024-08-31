@@ -15,7 +15,7 @@ namespace Erox.Api.Contracts.product.requests
         public decimal Price { get; set; }
         public decimal DiscountPrice { get; set; }
         [Required]
-        public string Category { get; set; }
+        public Guid CategoryId { get; set; }
         [Required]
         public string Color { get; set; }
         [Required]

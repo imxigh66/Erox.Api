@@ -10,10 +10,12 @@ using Erox.Application.Posts.Commands;
 using Erox.Application.Posts.Queries;
 using Erox.Application.Products.Command;
 using Erox.Application.Products.Queries;
+using Erox.Domain.Enumerations;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using static Erox.Api.ApiRoutes;
 
 namespace Erox.Api.Controllers.V1
 {
@@ -51,7 +53,7 @@ namespace Erox.Api.Controllers.V1
         [HttpGet]
         [Route("GetProductsByFilters")]
         [AllowAnonymous]
-        public async Task<IActionResult> GetByFilter(string? id,string? category,string? color,string? season,string? code,decimal? price, CancellationToken cancellationToken)
+        public async Task<IActionResult> GetByFilter(string? id,Guid? categoryId,string? color,string? season,string? code,decimal? price, CancellationToken cancellationToken)
         {
             Guid? productId = null;
 
@@ -68,7 +70,7 @@ namespace Erox.Api.Controllers.V1
             }
 
             var query = new GetProductByFilter() { 
-                Category=category,
+                CategoryId=categoryId,
                 Color=color,
                 Season=season,
                 Code=code,
@@ -102,8 +104,8 @@ namespace Erox.Api.Controllers.V1
                 Description = newProduct.Description,
                 Price=newProduct.Price,
                 DiscountPrice=newProduct.DiscountPrice,
+                CategoryId=newProduct.CategoryId,
                 Color=newProduct.Color,
-                Category=newProduct.Category,
                 Season=newProduct.Season,
                 Code=newProduct.Code,
                 Image   =newProduct.Image,
@@ -142,7 +144,7 @@ namespace Erox.Api.Controllers.V1
                 Description = updatedProduct.Description,
                 Code = updatedProduct.Code,
                 Image = updatedProduct.Image,
-                Category= updatedProduct.Category,
+                CategoryId= updatedProduct.CategoryId,
                 Color = updatedProduct.Color,
                 Season = updatedProduct.Season,
                 Price = updatedProduct.Price,
@@ -241,5 +243,25 @@ namespace Erox.Api.Controllers.V1
             var reviews = _mapper.Map<List<ProductReviewResponse>>(result.PayLoad);
             return Ok(reviews);
         }
+
+        [HttpPost]
+        [Route("Addcategory")]
+        public async Task<IActionResult> AddCategory(SexEnum sex,CancellationToken cancellationToken)
+        {
+            var command = new AddCategory()
+            {
+                Sex = sex
+
+            };
+
+            var result = await _mediator.Send(command, cancellationToken);
+
+            if (result.IsError) return HandleErrorResponse(result.Errors);
+
+            
+
+            return Ok();
+        }
+
     }
 }

@@ -26,6 +26,7 @@ namespace Erox.DataAccess
         public DbSet<Wishlist> Wishlists { get; set; }
         public DbSet<Card> Cards { get; set; }
         public DbSet<Order> Orders { get; set; }
+        public DbSet<Category> Category { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -43,6 +44,7 @@ namespace Erox.DataAccess
             builder.ApplyConfiguration(new CardItemsConfig());
             builder.ApplyConfiguration(new OrderItemConfig());
             builder.ApplyConfiguration(new OrderConfig());
+            builder.ApplyConfiguration(new CategoryConfig());
             base.OnModelCreating(builder);
         }
     }
