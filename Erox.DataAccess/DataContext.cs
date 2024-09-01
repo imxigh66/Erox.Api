@@ -47,6 +47,7 @@ namespace Erox.DataAccess
             builder.ApplyConfiguration(new OrderConfig());
             builder.ApplyConfiguration(new CategoryConfig());
             builder.ApplyConfiguration(new ProductNameTranslationConfig());
+            builder.ApplyConfiguration(new ProductDescriptionTranslationConfig());
             base.OnModelCreating(builder);
         }
     }

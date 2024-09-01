@@ -12,10 +12,10 @@ namespace Erox.Application.Products.Command
 {
     public  class CreateProduct:IRequest<OperationResult<Product>>
     {
-        public ProductNameTranslationCreateCommand[] Names { get; set; }
+        public ProductTranslationCreateCommand[] Names { get; set; }
 
 
-        public string Description { get; set; }
+        public ProductTranslationCreateCommand[] Descriptions { get; set; }
 
 
       

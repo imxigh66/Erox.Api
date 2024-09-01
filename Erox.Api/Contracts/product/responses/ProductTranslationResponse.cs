@@ -2,7 +2,7 @@
 
 namespace Erox.Api.Contracts.product.responses
 {
-    public class ProductNameTranslationResponse
+    public class ProductTranslationResponse
     {
         public Guid Id { get; set; }
         public string Title { get; set; }

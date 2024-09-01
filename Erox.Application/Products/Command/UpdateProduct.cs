@@ -12,10 +12,10 @@ namespace Erox.Application.Products.Command
     public class UpdateProduct:IRequest<OperationResult<Product>>
     {
         public Guid ProductId { get; set; }
-        public ProductNameTranslationCreateCommand[] Names { get; set; }
+        public ProductTranslationCreateCommand[] Names { get; set; }
 
 
-        public string Description { get; set; }
+        public ProductTranslationCreateCommand[] Descriptions { get; set; }
 
 
 

@@ -23,7 +23,7 @@ namespace Erox.Domain.Aggregates.ProductAggregate
         private readonly List<ProductSize> _sizes = new List<ProductSize>();
         public Guid ProductId { get; set; }
       
-        public string Description { get; private set; }
+      
         public decimal Price { get; private set; }  
         public decimal DiscountPrice { get; private set; }
         public Guid CategoryId { get; private set; }
@@ -40,17 +40,18 @@ namespace Erox.Domain.Aggregates.ProductAggregate
         public IEnumerable<CardItem> CardItems { get; set; }
         public IEnumerable<WishlistItem> WishlistItems { get; set; }
         public IEnumerable<ProductNameTranslation> ProductNameTranslations { get; set; }
+        public IEnumerable<ProductDescriptionTranslation> ProductDescriptionTranslations { get; set; }
 
 
 
 
-        public static Product CreateProduct(string description,decimal price,decimal discount,Guid categoryId,string color,string image,string season,string code)
+        public static Product CreateProduct(decimal price,decimal discount,Guid categoryId,string color,string image,string season,string code)
         {
             var validator = new ProductValidator();
             var objectToValidate = new Product
             {
                // Name = name,
-                Description = description,  
+                //Description = description,  
                 Price=price,
                 DiscountPrice=discount,
                 CategoryId = categoryId,
@@ -71,7 +72,7 @@ namespace Erox.Domain.Aggregates.ProductAggregate
             throw exception;
         }
 
-        public void UpdateProducts( string description, decimal price, decimal discount, Guid categoryId, string color, string image, string season, string code)
+        public void UpdateProducts(  decimal price, decimal discount, Guid categoryId, string color, string image, string season, string code)
         {
             //if (string.IsNullOrWhiteSpace(newText))
             //{
@@ -81,7 +82,7 @@ namespace Erox.Domain.Aggregates.ProductAggregate
             //    throw exception;
             //}
            // Name = name;
-            Description = description;
+            //Description = description;
             Price = price;
             DiscountPrice = discount;
             CategoryId = categoryId;

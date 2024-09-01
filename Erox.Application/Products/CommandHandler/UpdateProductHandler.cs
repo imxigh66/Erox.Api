@@ -3,6 +3,7 @@ using Erox.Application.Models;
 using Erox.Application.Posts;
 using Erox.Application.Products.Command;
 using Erox.DataAccess;
+using Erox.DataAccess.Migrations;
 using Erox.Domain.Aggregates.PostAggregate;
 using Erox.Domain.Aggregates.ProductAggregate;
 using Erox.Domain.Aggregates.Translations;
@@ -34,6 +35,7 @@ namespace Erox.Application.Products.CommandHandler
             {
                 var product = await _ctx.Products
                     .Include(p => p.ProductNameTranslations)
+                    .Include(p => p.ProductDescriptionTranslations)
                     .FirstOrDefaultAsync(p => p.ProductId == request.ProductId, cancellationToken: cancellationToken);
 
                 if (product is null)
@@ -43,13 +45,13 @@ namespace Erox.Application.Products.CommandHandler
                 }
 
                 // Update product details
-                product.UpdateProducts(request.Description, request.Price, request.DiscountPrice, request.CategoryId, request.Color, request.Image, request.Season, request.Code);
+                product.UpdateProducts(request.Price, request.DiscountPrice, request.CategoryId, request.Color, request.Image, request.Season, request.Code);
 
                 // Update translations
-                var existingTranslations = product.ProductNameTranslations.ToList();
+                var existingNameTranslations = product.ProductNameTranslations.ToList();
                 foreach (var translation in request.Names)
                 {
-                    var existingTranslation = existingTranslations.FirstOrDefault(t => t.Language == translation.LanguageCode.ToString());
+                    var existingTranslation = existingNameTranslations.FirstOrDefault(t => t.Language == translation.LanguageCode.ToString());
                     if (existingTranslation != null)
                     {
                         existingTranslation.Title = translation.Title;
@@ -68,8 +70,29 @@ namespace Erox.Application.Products.CommandHandler
                         }).ToArray();
                     }
                 }
+                var existingDescriptionTranslations = product.ProductDescriptionTranslations.ToList();
+                foreach (var translation in request.Descriptions)
+                {
+                    var existingTranslation = existingDescriptionTranslations.FirstOrDefault(t => t.Language == translation.LanguageCode.ToString());
+                    if (existingTranslation != null)
+                    {
+                        existingTranslation.Title = translation.Title;
+                    }
+                    else
+                    {
+                        product.ProductDescriptionTranslations = product.ProductDescriptionTranslations.Concat(new[]
+                        {
+                            new ProductDescriptionTranslation
+                            {
+                                Id = Guid.NewGuid(),
+                                Language = translation.LanguageCode.ToString(),
+                                ProductId = product.ProductId,
+                                Title = translation.Title,
+                            }
+                        }).ToArray();
+                    }
+                }
 
-               
 
                 await _ctx.SaveChangesAsync(cancellationToken);
                 result.PayLoad = product;

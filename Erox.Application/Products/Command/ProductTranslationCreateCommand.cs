@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Erox.Application.Products.Command
 {
-    public class ProductNameTranslationCreateCommand
+    public class ProductTranslationCreateCommand
     {
         public string Title { get; set; }
         public LanguageCodeEnum LanguageCode { get; set; }

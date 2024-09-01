@@ -10,8 +10,8 @@ namespace Erox.Api.Contracts.product.responses
         }
         public Guid ProductId { get; set; }
 
-        public ProductNameTranslationResponse[] Names { get; set; }
-        public string Description { get;  set; }
+        public ProductTranslationResponse[] Names { get; set; }
+        public ProductTranslationResponse[] Descriptions { get;  set; }
         public decimal Price { get;     set; }
         public decimal DiscountPrice { get;     set; }  
         public CategoryResponse Category { get; set; }

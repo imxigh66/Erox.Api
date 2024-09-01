@@ -11,10 +11,15 @@ namespace Erox.Api.MappingProfiles
         public ProductMapping()
         {
             CreateMap<Product, ProductResponce>()
-                .ForMember(des=>des.Names,opt=>opt.MapFrom(src=>src.ProductNameTranslations));
+                .ForMember(des=>des.Names,opt=>opt.MapFrom(src=>src.ProductNameTranslations))
+                .ForMember(des=>des.Descriptions,opt=>opt.MapFrom(src=>src.ProductDescriptionTranslations));
             
-            CreateMap<ProductNameTranslation, ProductNameTranslationResponse>()
+            CreateMap<ProductNameTranslation, ProductTranslationResponse>()
                 .ForMember(d=>d.LanguageCode,o=>o.MapFrom(s=>s.Language));
+
+            CreateMap<ProductDescriptionTranslation, ProductTranslationResponse>()
+                .ForMember(d => d.LanguageCode, o => o.MapFrom(s => s.Language));
+
             CreateMap<ProductReview,ProductReviewResponse>();
             CreateMap<ProductSize, ProductSizeResponse>();
        

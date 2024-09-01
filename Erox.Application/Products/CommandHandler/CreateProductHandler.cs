@@ -26,7 +26,7 @@ namespace Erox.Application.Products.CommandHandler
             var result = new OperationResult<Product>();
             try
             {
-                var product = Product.CreateProduct(request.Description,request.Price,request.DiscountPrice, request.CategoryId, request.Color,request.Image,request.Season, request.Code);
+                var product = Product.CreateProduct(request.Price,request.DiscountPrice, request.CategoryId, request.Color,request.Image,request.Season, request.Code);
 
                 product.ProductId = Guid.NewGuid();
 
@@ -36,6 +36,14 @@ namespace Erox.Application.Products.CommandHandler
                     ProductId = product.ProductId,
                     Title = s.Title,
                 }).ToArray();
+                
+                product.ProductDescriptionTranslations = request.Descriptions.Select(s => new ProductDescriptionTranslation {
+                    Id = Guid.NewGuid(),
+                    Language = s.LanguageCode.ToString(),
+                    ProductId = product.ProductId,
+                    Title = s.Title,
+                }).ToArray();
+
 
 
                 _ctx.Products.Add(product);
