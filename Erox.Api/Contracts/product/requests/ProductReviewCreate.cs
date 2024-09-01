@@ -6,14 +6,13 @@ namespace Erox.Api.Contracts.product.requests
     {
         [Required]
         public string Text { get; set; }
-        [Required]
-        public string Rating { get;  set; }
+       
         public bool IsApproved { get; set; }
 
-        public ProductReviewCreate(string text, string rating, bool isApproved)
+        public ProductReviewCreate(string text, bool isApproved)
         {
             Text = text;
-            Rating = rating;
+           
             IsApproved = isApproved;
         }
     }

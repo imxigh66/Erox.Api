@@ -38,7 +38,7 @@ namespace Erox.Application.Products.CommandHandler
                     return result;
                 }
 
-                var review = ProductReview.CreateProductReview(request.ProductId, request.Text, request.Rating,request.IsApproved);
+                var review = ProductReview.CreateProductReview(request.ProductId, request.Text,request.IsApproved);
               
 
                 product.AddProductReview(review);

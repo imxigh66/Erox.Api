@@ -18,20 +18,20 @@ namespace Erox.Domain.Aggregates.ProductAggregate
         public Product Product { get; private set; }
         public string Text { get; private set; }
         public Guid UserProfieId { get; private set; }
-        public string Rating { get; private set; }
+        
         public bool IsApproved { get; private set; }
         public DateTime CreatedDate { get; private set; }
         public DateTime LastModified { get; private set; }
 
 
-        public static ProductReview CreateProductReview(Guid productid, string text,string rating,bool isApproved)
+        public static ProductReview CreateProductReview(Guid productid, string text,bool isApproved)
         {
             var validator = new ProductReviewValidator();
             var objectToValidate = new ProductReview
             {
                 Productid = productid,
                 Text = text,
-                Rating = rating,
+               
                 IsApproved = isApproved,
               
                 CreatedDate = DateTime.Now,

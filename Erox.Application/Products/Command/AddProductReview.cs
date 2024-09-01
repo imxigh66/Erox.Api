@@ -8,8 +8,6 @@ namespace Erox.Application.Products.Command
     {
         public Guid ProductId { get; set; }
         public string Text { get; set; }
-      
-        public string Rating { get; set; }
         public bool IsApproved { get; set; }
         public Guid UserProfileId { get; set; }
       

@@ -183,8 +183,6 @@ namespace Erox.Api.Controllers.V1
             var command = new AddProductReview()
             {
                 ProductId = Guid.Parse(productId),
-               
-                Rating = review.Rating,
                 IsApproved = review.IsApproved,
                 Text = review.Text,
                 UserProfileId = userProfileId
