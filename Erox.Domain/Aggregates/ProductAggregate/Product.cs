@@ -28,7 +28,7 @@ namespace Erox.Domain.Aggregates.ProductAggregate
         public decimal DiscountPrice { get; private set; }
         public Guid CategoryId { get; private set; }
         public Category Category { get; private set; }
-        public string Color { get; private set; }
+       
         public string Image {  get; private set; }
         public string Season { get; private set; }
         public string  Code { get; private set; }
@@ -45,7 +45,7 @@ namespace Erox.Domain.Aggregates.ProductAggregate
 
 
 
-        public static Product CreateProduct(decimal price,decimal discount,Guid categoryId,string color,string image,string season,string code)
+        public static Product CreateProduct(decimal price,decimal discount,Guid categoryId,string image,string season,string code)
         {
             var validator = new ProductValidator();
             var objectToValidate = new Product
@@ -55,7 +55,7 @@ namespace Erox.Domain.Aggregates.ProductAggregate
                 Price=price,
                 DiscountPrice=discount,
                 CategoryId = categoryId,
-                Color = color,
+               
                 Image = image,
                 Season=season,
                 Code=code,
@@ -72,7 +72,7 @@ namespace Erox.Domain.Aggregates.ProductAggregate
             throw exception;
         }
 
-        public void UpdateProducts(  decimal price, decimal discount, Guid categoryId, string color, string image, string season, string code)
+        public void UpdateProducts(  decimal price, decimal discount, Guid categoryId,  string image, string season, string code)
         {
             //if (string.IsNullOrWhiteSpace(newText))
             //{
@@ -86,7 +86,7 @@ namespace Erox.Domain.Aggregates.ProductAggregate
             Price = price;
             DiscountPrice = discount;
             CategoryId = categoryId;
-            Color = color;
+
             Image = image;
             Season = season;
             Code = code;

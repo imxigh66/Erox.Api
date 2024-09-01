@@ -13,8 +13,6 @@ namespace Erox.Application.Products.Queries
     {
        public Guid? ProductId { get; set; }
        public Guid? CategoryId {  get; set; }
-       
-        public string? Color { get; set; }
         public string? Season { get; set; }
         public string? Code { get; set; }
         public decimal? Price { get; set; }

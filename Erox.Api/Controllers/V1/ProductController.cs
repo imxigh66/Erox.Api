@@ -71,7 +71,6 @@ namespace Erox.Api.Controllers.V1
 
             var query = new GetProductByFilter() { 
                 CategoryId=categoryId,
-                Color=color,
                 Season=season,
                 Code=code,
                 Price=price,
@@ -105,7 +104,6 @@ namespace Erox.Api.Controllers.V1
                 Price =newProduct.Price,
                 DiscountPrice=newProduct.DiscountPrice,
                 CategoryId=newProduct.CategoryId,
-                Color=newProduct.Color,
                 Season=newProduct.Season,
                 Code=newProduct.Code,
                 Image   =newProduct.Image,
@@ -145,7 +143,6 @@ namespace Erox.Api.Controllers.V1
                 Code = updatedProduct.Code,
                 Image = updatedProduct.Image,
                 CategoryId= updatedProduct.CategoryId,
-                Color = updatedProduct.Color,
                 Season = updatedProduct.Season,
                 Price = updatedProduct.Price,
                 DiscountPrice = updatedProduct.DiscountPrice,

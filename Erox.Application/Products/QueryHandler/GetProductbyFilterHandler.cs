@@ -56,12 +56,6 @@ namespace Erox.Application.Products.QueryHandler
                     query = query.Where(o => o.ProductId == request.ProductId);
                 }
 
-                // Фильтр по OrderId
-                if (request.Color != null)
-                {
-                    query = query.Where(o => o.Color== request.Color);
-                }
-
                 
 
                 // Фильтр по дате создания

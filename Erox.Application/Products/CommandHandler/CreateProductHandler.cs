@@ -26,7 +26,7 @@ namespace Erox.Application.Products.CommandHandler
             var result = new OperationResult<Product>();
             try
             {
-                var product = Product.CreateProduct(request.Price,request.DiscountPrice, request.CategoryId, request.Color,request.Image,request.Season, request.Code);
+                var product = Product.CreateProduct(request.Price,request.DiscountPrice, request.CategoryId,request.Image,request.Season, request.Code);
 
                 product.ProductId = Guid.NewGuid();
 

@@ -45,7 +45,7 @@ namespace Erox.Application.Products.CommandHandler
                 }
 
                 // Update product details
-                product.UpdateProducts(request.Price, request.DiscountPrice, request.CategoryId, request.Color, request.Image, request.Season, request.Code);
+                product.UpdateProducts(request.Price, request.DiscountPrice, request.CategoryId, request.Image, request.Season, request.Code);
 
                 // Update translations
                 var existingNameTranslations = product.ProductNameTranslations.ToList();

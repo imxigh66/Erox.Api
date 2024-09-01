@@ -24,7 +24,6 @@ namespace Erox.Application.Products.Command
         
         public Guid CategoryId { get; set; }
      
-        public string Color { get; set; }
        
         public string Image { get; set; }
        
