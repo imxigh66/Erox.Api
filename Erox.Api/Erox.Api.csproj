@@ -29,4 +29,8 @@
     <ProjectReference Include="..\Erox.Domain\Erox.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\images\products\" />
+  </ItemGroup>
+
 </Project>

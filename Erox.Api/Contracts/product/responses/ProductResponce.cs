@@ -16,7 +16,7 @@ namespace Erox.Api.Contracts.product.responses
         public decimal DiscountPrice { get;     set; }  
         public CategoryResponse Category { get; set; }
         public ProductSizeResponse[] Sizes { get; set; }
-        public string Image { get; set; }
+        public string[] Images { get; set; }
         public string Season { get; set; }
         public string Code { get; set; }
         public DateTime CreatedDate { get; set; }

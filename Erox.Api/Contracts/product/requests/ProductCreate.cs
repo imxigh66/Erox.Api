@@ -17,7 +17,7 @@ namespace Erox.Api.Contracts.product.requests
         [Required]
         public Guid CategoryId { get; set; }
         [Required]
-        public string Image { get; set; }
+        public IFormFile[] Images { get; set; }
         [Required]
         public string Season { get; set; }
         [Required]

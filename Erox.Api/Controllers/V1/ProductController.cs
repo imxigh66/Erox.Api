@@ -94,9 +94,25 @@ namespace Erox.Api.Controllers.V1
         [ValidateModel]
         [Route("CreatePost")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
-        public async Task<IActionResult> CreateProduct([FromBody] ProductCreate newProduct, CancellationToken cancellationToken)
+        public async Task<IActionResult> CreateProduct([FromForm] ProductCreate newProduct, CancellationToken cancellationToken)
         {
-            
+
+            var imagePaths = new List<string>();
+
+            // Сначала загружаем изображения и получаем пути
+            foreach (var file in newProduct.Images)
+            {
+                var fileName = $"{Guid.NewGuid()}_{Path.GetFileName(file.FileName)}";
+                var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/products", fileName);
+
+                using (var stream = new FileStream(path, FileMode.Create))
+                {
+                    await file.CopyToAsync(stream);
+                }
+
+                imagePaths.Add($"/images/products/{fileName}");
+            }
+
             var command = new CreateProduct
             {
                 Names = newProduct.Names.Select(s=>new ProductTranslationCreateCommand { LanguageCode=s.LanguageCode,Title=s.Title} ).ToArray() ,
@@ -106,16 +122,22 @@ namespace Erox.Api.Controllers.V1
                 CategoryId=newProduct.CategoryId,
                 Season=newProduct.Season,
                 Code=newProduct.Code,
-                Image   =newProduct.Image,
-                
+                Images = imagePaths.ToArray()
+
             };
             var result = await _mediator.Send(command, cancellationToken);
             
 
             if (result.IsError) return HandleErrorResponse(result.Errors);
+           
+
             var mapped = _mapper.Map<ProductResponce>(result.PayLoad);
             return Ok(mapped);
         }
+
+
+       
+
 
         [HttpGet]
         [Route("GetAllProducts")]
@@ -141,7 +163,7 @@ namespace Erox.Api.Controllers.V1
                 Names = updatedProduct.Names.Select(s => new ProductTranslationCreateCommand { LanguageCode = s.LanguageCode, Title = s.Title }).ToArray(),
                 Descriptions = updatedProduct.Descriptions.Select(s => new ProductTranslationCreateCommand { LanguageCode = s.LanguageCode, Title = s.Title }).ToArray(),
                 Code = updatedProduct.Code,
-                Image = updatedProduct.Image,
+               // Image = updatedProduct.Image,
                 CategoryId= updatedProduct.CategoryId,
                 Season = updatedProduct.Season,
                 Price = updatedProduct.Price,

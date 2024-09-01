@@ -1,7 +1,7 @@
 ﻿using Erox.Application.Models;
 using Erox.Application.Products.Command;
 using Erox.DataAccess;
-using Erox.Domain.Aggregates.PostAggregate;
+
 using Erox.Domain.Aggregates.ProductAggregate;
 using Erox.Domain.Aggregates.Translations;
 using Erox.Domain.Exeptions;
@@ -26,7 +26,7 @@ namespace Erox.Application.Products.CommandHandler
             var result = new OperationResult<Product>();
             try
             {
-                var product = Product.CreateProduct(request.Price,request.DiscountPrice, request.CategoryId,request.Image,request.Season, request.Code);
+                var product = Product.CreateProduct(request.Price,request.DiscountPrice, request.CategoryId,request.Season, request.Code);
 
                 product.ProductId = Guid.NewGuid();
 
@@ -44,7 +44,13 @@ namespace Erox.Application.Products.CommandHandler
                     Title = s.Title,
                 }).ToArray();
 
-              
+
+                product.Images = request.Images.Select(s => new ProductImages
+                {
+                    Id = Guid.NewGuid(),
+                    Path = s,  // Путь уже сгенерирован ранее
+                    ProductId = product.ProductId
+                }).ToArray();
 
                 _ctx.Products.Add(product);
                 await _ctx.SaveChangesAsync(cancellationToken);
