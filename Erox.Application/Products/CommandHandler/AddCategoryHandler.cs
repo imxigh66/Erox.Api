@@ -3,6 +3,7 @@ using Erox.Application.Models;
 using Erox.Application.Products.Command;
 using Erox.DataAccess;
 using Erox.Domain.Aggregates.ProductAggregate;
+using Erox.Domain.Aggregates.Translations;
 using Erox.Domain.Exeptions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -29,12 +30,18 @@ namespace Erox.Application.Products.CommandHandler
             {
 
 
-                var category = new Category() { Sex=request.Sex.ToString()}; 
+                var category = new Category() { Sex=request.Sex.ToString() };
+                category.Id = Guid.NewGuid();
 
+                category.CategoryTranslations = request.CategoryTranslations.Select(s => new CategoryTranslation
+                {
+                    Id = Guid.NewGuid(),
+                    Language = s.LanguageCode.ToString(),
+                   CategoryId = category.Id,
+                    Title = s.Title,
+                }).ToArray();
 
-               
-
-                _ctx.Category.Update(category);
+                _ctx.Categories.Add(category);
                 await _ctx.SaveChangesAsync(cancellationToken);
 
                 _result.PayLoad = category;

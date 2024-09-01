@@ -4,6 +4,7 @@
     {
         public Guid Id { get; set; }
         public string Sex { get; set; }
+        public ProductTranslationResponse[] Names { get; set; }
 
     }
 }

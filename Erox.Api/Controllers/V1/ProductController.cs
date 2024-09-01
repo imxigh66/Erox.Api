@@ -244,24 +244,7 @@ namespace Erox.Api.Controllers.V1
             return Ok(reviews);
         }
 
-        [HttpPost]
-        [Route("Addcategory")]
-        public async Task<IActionResult> AddCategory(SexEnum sex,CancellationToken cancellationToken)
-        {
-            var command = new AddCategory()
-            {
-                Sex = sex
-
-            };
-
-            var result = await _mediator.Send(command, cancellationToken);
-
-            if (result.IsError) return HandleErrorResponse(result.Errors);
-
-            
-
-            return Ok();
-        }
+        
 
     }
 }

@@ -13,5 +13,6 @@ namespace Erox.Application.Products.Command
     public class AddCategory:IRequest<OperationResult<Category>>
     {
         public SexEnum Sex { get; set; }
+        public ProductTranslationCreateCommand[] CategoryTranslations { get; set; }
     }
 }

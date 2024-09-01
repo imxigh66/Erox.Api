@@ -4,6 +4,7 @@ using Erox.Domain.Aggregates.CardAggregate;
 using Erox.Domain.Aggregates.OrderAggregate;
 using Erox.Domain.Aggregates.PostAggregate;
 using Erox.Domain.Aggregates.ProductAggregate;
+using Erox.Domain.Aggregates.Translations;
 using Erox.Domain.Aggregates.UsersProfiles;
 using Erox.Domain.Aggregates.WishlistAggregate;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -27,7 +28,7 @@ namespace Erox.DataAccess
         public DbSet<Wishlist> Wishlists { get; set; }
         public DbSet<Card> Cards { get; set; }
         public DbSet<Order> Orders { get; set; }
-        public DbSet<Category> Category { get; set; }
+        public DbSet<Category> Categories { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -48,6 +49,7 @@ namespace Erox.DataAccess
             builder.ApplyConfiguration(new CategoryConfig());
             builder.ApplyConfiguration(new ProductNameTranslationConfig());
             builder.ApplyConfiguration(new ProductDescriptionTranslationConfig());
+            builder.ApplyConfiguration(new CategoryTranslationConfig());
             base.OnModelCreating(builder);
         }
     }

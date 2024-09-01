@@ -44,7 +44,7 @@ namespace Erox.Application.Products.CommandHandler
                     Title = s.Title,
                 }).ToArray();
 
-
+              
 
                 _ctx.Products.Add(product);
                 await _ctx.SaveChangesAsync(cancellationToken);
