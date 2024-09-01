@@ -5,7 +5,7 @@ namespace Erox.Api.Contracts.product.requests
     public class ProductCreate
     {
         [Required]
-        public string Name { get; set; }
+       public ProductNameTranslationRequest[] Names { get; set; }
 
         [Required]
         public string Description { get; set; }

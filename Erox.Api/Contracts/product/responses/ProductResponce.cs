@@ -1,4 +1,6 @@
-﻿namespace Erox.Api.Contracts.product.responses
+﻿using Erox.Api.Contracts.product.requests;
+
+namespace Erox.Api.Contracts.product.responses
 {
     public class ProductResponce
     {
@@ -8,7 +10,7 @@
         }
         public Guid ProductId { get; set; }
 
-        public string Name { get;  set; }
+        public ProductNameTranslationResponse[] Names { get; set; }
         public string Description { get;  set; }
         public decimal Price { get;     set; }
         public decimal DiscountPrice { get;     set; }  

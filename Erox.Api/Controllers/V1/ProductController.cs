@@ -100,7 +100,7 @@ namespace Erox.Api.Controllers.V1
             
             var command = new CreateProduct
             {
-                Name = newProduct.Name,
+                Names = newProduct.Names.Select(s=>new ProductNameTranslationCreateCommand { LanguageCode=s.LanguageCode,Title=s.Title} ).ToArray() ,
                 Description = newProduct.Description,
                 Price=newProduct.Price,
                 DiscountPrice=newProduct.DiscountPrice,
@@ -140,7 +140,7 @@ namespace Erox.Api.Controllers.V1
 
             var command = new UpdateProduct()
             {
-                Name = updatedProduct.Name,
+                Names = updatedProduct.Names.Select(s => new ProductNameTranslationCreateCommand { LanguageCode = s.LanguageCode, Title = s.Title }).ToArray(),
                 Description = updatedProduct.Description,
                 Code = updatedProduct.Code,
                 Image = updatedProduct.Image,

@@ -33,6 +33,7 @@ namespace Erox.Application.Products.CommandHandler
 													.Include(i => i.WishlistItems)
 													.Include(i => i.Reviews)
 													.Include(i=>i.Category)
+													.Include(i=>i.ProductNameTranslations)
 													;
 
 				var product = await includedProducts.FirstOrDefaultAsync(p => p.ProductId == request.ProductId);

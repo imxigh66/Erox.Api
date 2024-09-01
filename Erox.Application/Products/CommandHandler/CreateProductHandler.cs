@@ -3,6 +3,7 @@ using Erox.Application.Products.Command;
 using Erox.DataAccess;
 using Erox.Domain.Aggregates.PostAggregate;
 using Erox.Domain.Aggregates.ProductAggregate;
+using Erox.Domain.Aggregates.Translations;
 using Erox.Domain.Exeptions;
 using MediatR;
 using System;
@@ -25,7 +26,18 @@ namespace Erox.Application.Products.CommandHandler
             var result = new OperationResult<Product>();
             try
             {
-                var product = Product.CreateProduct(request.Name,request.Description,request.Price,request.DiscountPrice, request.CategoryId, request.Color,request.Image,request.Season, request.Code);
+                var product = Product.CreateProduct(request.Description,request.Price,request.DiscountPrice, request.CategoryId, request.Color,request.Image,request.Season, request.Code);
+
+                product.ProductId = Guid.NewGuid();
+
+                product.ProductNameTranslations = request.Names.Select(s => new ProductNameTranslation {
+                    Id = Guid.NewGuid(),
+                    Language = s.LanguageCode.ToString(),
+                    ProductId = product.ProductId,
+                    Title = s.Title,
+                }).ToArray();
+
+
                 _ctx.Products.Add(product);
                 await _ctx.SaveChangesAsync(cancellationToken);
                 result.PayLoad = product;

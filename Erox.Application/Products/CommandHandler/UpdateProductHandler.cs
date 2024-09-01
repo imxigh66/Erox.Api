@@ -5,6 +5,7 @@ using Erox.Application.Products.Command;
 using Erox.DataAccess;
 using Erox.Domain.Aggregates.PostAggregate;
 using Erox.Domain.Aggregates.ProductAggregate;
+using Erox.Domain.Aggregates.Translations;
 using Erox.Domain.Exeptions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -31,21 +32,50 @@ namespace Erox.Application.Products.CommandHandler
 
             try
             {
-                var product = await _ctx.Products.FirstOrDefaultAsync(p => p.ProductId == request.ProductId, cancellationToken: cancellationToken);
+                var product = await _ctx.Products
+                    .Include(p => p.ProductNameTranslations)
+                    .FirstOrDefaultAsync(p => p.ProductId == request.ProductId, cancellationToken: cancellationToken);
 
                 if (product is null)
                 {
                     result.AddError(ErrorCode.NotFound, string.Format(ProductsErrorMessage.ProductNotFound, request.ProductId));
                     return result;
                 }
-                product.UpdateProducts(request.Name, request.Description, request.Price, request.DiscountPrice, request.CategoryId, request.Color, request.Image,request.Season, request.Code);
+
+                // Update product details
+                product.UpdateProducts(request.Description, request.Price, request.DiscountPrice, request.CategoryId, request.Color, request.Image, request.Season, request.Code);
+
+                // Update translations
+                var existingTranslations = product.ProductNameTranslations.ToList();
+                foreach (var translation in request.Names)
+                {
+                    var existingTranslation = existingTranslations.FirstOrDefault(t => t.Language == translation.LanguageCode.ToString());
+                    if (existingTranslation != null)
+                    {
+                        existingTranslation.Title = translation.Title;
+                    }
+                    else
+                    {
+                        product.ProductNameTranslations = product.ProductNameTranslations.Concat(new[]
+                        {
+                            new ProductNameTranslation
+                            {
+                                Id = Guid.NewGuid(),
+                                Language = translation.LanguageCode.ToString(),
+                                ProductId = product.ProductId,
+                                Title = translation.Title,
+                            }
+                        }).ToArray();
+                    }
+                }
+
+               
+
                 await _ctx.SaveChangesAsync(cancellationToken);
                 result.PayLoad = product;
-                return result;
             }
             catch (ProductNotValidExeption e)
             {
-
                 e.ValidationErrors.ForEach(er =>
                 {
                     result.AddError(ErrorCode.ValidationError, er);
@@ -55,7 +85,9 @@ namespace Erox.Application.Products.CommandHandler
             {
                 result.AddUnknownError(ex.Message);
             }
+
             return result;
-        }
+        
+    }
     }
 }

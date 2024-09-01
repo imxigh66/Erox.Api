@@ -1,4 +1,5 @@
 ﻿using Erox.DataAccess.Configuarations;
+using Erox.DataAccess.Configuarations.Translations;
 using Erox.Domain.Aggregates.CardAggregate;
 using Erox.Domain.Aggregates.OrderAggregate;
 using Erox.Domain.Aggregates.PostAggregate;
@@ -45,6 +46,7 @@ namespace Erox.DataAccess
             builder.ApplyConfiguration(new OrderItemConfig());
             builder.ApplyConfiguration(new OrderConfig());
             builder.ApplyConfiguration(new CategoryConfig());
+            builder.ApplyConfiguration(new ProductNameTranslationConfig());
             base.OnModelCreating(builder);
         }
     }

@@ -12,9 +12,9 @@ namespace Erox.Domain.Validators.ProductValidators
     {
         public ProductValidator()
         {
-            RuleFor(p => p.Name)
-            .NotNull().WithMessage("Product name can't be null")
-            .NotEmpty().WithMessage("Product name can't be empty");
+            //RuleFor(p => p.Name)
+            //.NotNull().WithMessage("Product name can't be null")
+            //.NotEmpty().WithMessage("Product name can't be empty");
         }
     }
 }
