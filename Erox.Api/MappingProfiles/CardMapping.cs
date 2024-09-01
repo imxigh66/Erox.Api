@@ -16,7 +16,6 @@ namespace Erox.Api.MappingProfiles
             //.ForMember(dest => dest.ProductId, opt => opt.MapFrom(src => src.Items.First().ProductId));
             CreateMap<CardItem, CardProductResponse>()
            .ForMember(dest => dest.ProductId, opt => opt.MapFrom(src => src.ProductId))
-           .ForMember(dest => dest.Color, opt => opt.MapFrom(src => src.Color))
            .ForMember(dest => dest.Quantity, opt => opt.MapFrom(src => src.Quantity))
            .ForMember(dest => dest.Sizes, opt => opt.MapFrom(src => src.Product.Sizes));
 

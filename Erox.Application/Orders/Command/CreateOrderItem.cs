@@ -15,7 +15,6 @@ namespace Erox.Application.Orders.Command
        
         public Guid ProductId { get; set; }
         public Guid SizeId { get; set; }
-        public string Color { get; set; }
         public int Quantity { get; set; }
     }
 }

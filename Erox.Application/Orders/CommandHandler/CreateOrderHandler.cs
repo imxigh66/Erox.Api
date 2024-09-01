@@ -45,7 +45,7 @@ namespace Erox.Application.Orders.CommandHandler
                         Items = request.Items.Select(s => new OrderItem 
                         {
                             OrderId = id,
-                            Color =s.Color,
+                            
                             SizeId =s.SizeId,
                             Quantity=s.Quantity,
                             ProductId=s.ProductId,

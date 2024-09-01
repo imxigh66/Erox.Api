@@ -25,6 +25,7 @@ namespace Erox.DataAccess
         public DbSet<UserProfileEntity> UserProfiles { get; set; }
         public DbSet<Post> Posts { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<ProductReview> ProductReviews { get; set; }
         public DbSet<Wishlist> Wishlists { get; set; }
         public DbSet<Card> Cards { get; set; }
         public DbSet<Order> Orders { get; set; }

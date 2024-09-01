@@ -239,7 +239,15 @@ namespace Erox.Api.Controllers.V1
             return Ok(reviews);
         }
 
-        
+        [HttpGet]
+        [Route("GetAllReviews")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
+        public async Task<IActionResult> GetAllReviews(CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(new GetAllReviews(), cancellationToken);
+            var mapped = _mapper.Map<List<ProductReviewResponse>>(result.PayLoad);
+            return result.IsError ? HandleErrorResponse(result.Errors) : Ok(mapped);
+        }
 
     }
 }
