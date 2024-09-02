@@ -30,6 +30,8 @@ namespace Erox.DataAccess
         public DbSet<Card> Cards { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<ProductImages> ProductImages { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

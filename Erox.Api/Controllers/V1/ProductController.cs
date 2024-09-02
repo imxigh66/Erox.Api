@@ -53,7 +53,7 @@ namespace Erox.Api.Controllers.V1
         [HttpGet]
         [Route("GetProductsByFilters")]
         [AllowAnonymous]
-        public async Task<IActionResult> GetByFilter(string? id,Guid? categoryId,string? color,string? season,string? code,decimal? price, CancellationToken cancellationToken)
+        public async Task<IActionResult> GetByFilter(string? id,Guid? categoryId,string? season,string? code,decimal? price, CancellationToken cancellationToken)
         {
             Guid? productId = null;
 
@@ -92,26 +92,12 @@ namespace Erox.Api.Controllers.V1
 
         [HttpPost]
         [ValidateModel]
-        [Route("CreatePost")]
+        [Route("CreateProduct")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
-        public async Task<IActionResult> CreateProduct([FromForm] ProductCreate newProduct, CancellationToken cancellationToken)
+        public async Task<IActionResult> CreateProduct([FromBody] ProductCreate newProduct, CancellationToken cancellationToken)
         {
 
-            var imagePaths = new List<string>();
-
-            // Сначала загружаем изображения и получаем пути
-            foreach (var file in newProduct.Images)
-            {
-                var fileName = $"{Guid.NewGuid()}_{Path.GetFileName(file.FileName)}";
-                var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/products", fileName);
-
-                using (var stream = new FileStream(path, FileMode.Create))
-                {
-                    await file.CopyToAsync(stream);
-                }
-
-                imagePaths.Add($"/images/products/{fileName}");
-            }
+            
 
             var command = new CreateProduct
             {
@@ -122,7 +108,7 @@ namespace Erox.Api.Controllers.V1
                 CategoryId=newProduct.CategoryId,
                 Season=newProduct.Season,
                 Code=newProduct.Code,
-                Images = imagePaths.ToArray()
+              
 
             };
             var result = await _mediator.Send(command, cancellationToken);
@@ -135,8 +121,27 @@ namespace Erox.Api.Controllers.V1
             return Ok(mapped);
         }
 
+        [HttpPost]
+        [Route("UploadProductImages/{productId}")]
+        public async Task<IActionResult> UploadProductImages(Guid productId, [FromForm] List<IFormFile> files, CancellationToken cancellationToken)
+        {
+            var command = new UploadProductImagesCommand
+            {
+                ProductId = productId,
+                Files = files
+            };
 
-       
+            var result = await _mediator.Send(command, cancellationToken);
+
+            if (result.IsError)
+            {
+                return HandleErrorResponse(result.Errors);
+            }
+
+            return Ok(result.PayLoad);
+        }
+
+
 
 
         [HttpGet]

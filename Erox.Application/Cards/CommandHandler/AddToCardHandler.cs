@@ -59,7 +59,7 @@ namespace Erox.Application.Cards.CommandHandler
                 {
                     CardId = card.CardId,
                    SizeId=request.ProductSizeId,
-                   Color=request.Color,
+                 
                    Quantity = request.Quantity,
                     ProductId = request.ProductId
                 };

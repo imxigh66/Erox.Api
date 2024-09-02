@@ -45,16 +45,14 @@ namespace Erox.Application.Products.CommandHandler
                 }).ToArray();
 
 
-                product.Images = request.Images.Select(s => new ProductImages
-                {
-                    Id = Guid.NewGuid(),
-                    Path = s,  // Путь уже сгенерирован ранее
-                    ProductId = product.ProductId
-                }).ToArray();
-
                 _ctx.Products.Add(product);
+
+                // Отладочная информация
+                Console.WriteLine("Saving product to the database...");
                 await _ctx.SaveChangesAsync(cancellationToken);
                 result.PayLoad = product;
+
+                Console.WriteLine("Product saved successfully.");
             }
             catch (ProductNotValidExeption e)
             {

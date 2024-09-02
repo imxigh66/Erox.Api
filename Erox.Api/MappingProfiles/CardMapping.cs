@@ -17,7 +17,10 @@ namespace Erox.Api.MappingProfiles
             CreateMap<CardItem, CardProductResponse>()
            .ForMember(dest => dest.ProductId, opt => opt.MapFrom(src => src.ProductId))
            .ForMember(dest => dest.Quantity, opt => opt.MapFrom(src => src.Quantity))
-           .ForMember(dest => dest.Sizes, opt => opt.MapFrom(src => src.Product.Sizes));
+           .ForMember(dest => dest.Sizes, opt => opt.MapFrom(src => src.Product.Sizes))
+           .ForMember(dest => dest.Images, opt => opt.MapFrom(src => src.Product.Images.Select(img => $"{img.Path}").ToList()))
+            .ForMember(dest => dest.Names, opt => opt.MapFrom(src => src.Product.ProductNameTranslations))
+            .ForMember(dest => dest.Code, opt => opt.MapFrom(src => src.Product.Code));
 
         }
     }

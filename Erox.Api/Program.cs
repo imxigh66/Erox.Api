@@ -9,7 +9,7 @@ builder.RegisterServices(typeof(Program));
 var app = builder.Build();
 app.UseCors("AllowSpecificOrigin");
 app.UseHttpsRedirection();
-
+app.UseStaticFiles();
 app.RegisterPipelineComponents(typeof(Program));
 
 app.Run();

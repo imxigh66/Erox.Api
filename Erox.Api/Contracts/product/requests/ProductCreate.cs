@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace Erox.Api.Contracts.product.requests
 {
@@ -16,8 +17,8 @@ namespace Erox.Api.Contracts.product.requests
         public decimal DiscountPrice { get; set; }
         [Required]
         public Guid CategoryId { get; set; }
-        [Required]
-        public IFormFile[] Images { get; set; }
+        //[Required]
+        //public IFormFile[] Images { get; set; }
         [Required]
         public string Season { get; set; }
         [Required]

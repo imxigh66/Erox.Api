@@ -21,7 +21,6 @@ namespace Erox.Domain.Aggregates.CardAggregate
         public Product Product { get; set; }
         public ProductSize Size { get; set; }
         public Guid SizeId { get; set; }
-        public string Color { get; set; }
         public int Quantity { get; set; }
     }
 }
