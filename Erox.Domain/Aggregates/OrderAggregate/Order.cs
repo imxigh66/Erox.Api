@@ -36,7 +36,7 @@ namespace Erox.Domain.Aggregates.OrderAggregate
             Address = address;
             Items= items;
 
-
+            CreatedDate = DateTime.UtcNow;
             LastModified = DateTime.UtcNow;
         }
     }

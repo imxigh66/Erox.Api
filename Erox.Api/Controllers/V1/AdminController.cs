@@ -41,11 +41,25 @@ namespace Erox.Api.Controllers.V1
             return Ok(result);
         }
 
-        [HttpGet("top-selling-products")]
+        [HttpGet]
+        [Route("top-selling-products")]
         public async Task<IActionResult> GetTopSellingProducts([FromQuery] int topCount = 10)
         {
             var topProducts = await _topSalesHandler.GetTopSellingProductsAsync(topCount);
             return Ok(topProducts);
+        }
+
+        [HttpGet]
+        [Route("revenue-by-period")]
+        public async Task<IActionResult> GetRevenueByPeriod([FromQuery] PeriodType periodType)
+        {
+            
+            var query = new RevenueByPeriodQuery(periodType);
+
+            
+            var revenue = await _mediator.Send(query);
+
+            return Ok(new { Revenue = revenue });
         }
 
     }
