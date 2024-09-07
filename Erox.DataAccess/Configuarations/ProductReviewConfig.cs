@@ -1,4 +1,4 @@
-﻿using Erox.Domain.Aggregates.PostAggregate;
+﻿
 using Erox.Domain.Aggregates.ProductAggregate;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

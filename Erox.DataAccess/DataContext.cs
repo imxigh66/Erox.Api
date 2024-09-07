@@ -2,7 +2,7 @@
 using Erox.DataAccess.Configuarations.Translations;
 using Erox.Domain.Aggregates.CardAggregate;
 using Erox.Domain.Aggregates.OrderAggregate;
-using Erox.Domain.Aggregates.PostAggregate;
+
 using Erox.Domain.Aggregates.ProductAggregate;
 using Erox.Domain.Aggregates.Translations;
 using Erox.Domain.Aggregates.UsersProfiles;
@@ -23,7 +23,7 @@ namespace Erox.DataAccess
         public DataContext(DbContextOptions<DataContext> options) : base(options) { }
 
         public DbSet<UserProfileEntity> UserProfiles { get; set; }
-        public DbSet<Post> Posts { get; set; }
+       
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductReview> ProductReviews { get; set; }
         public DbSet<Wishlist> Wishlists { get; set; }
@@ -35,7 +35,7 @@ namespace Erox.DataAccess
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.ApplyConfiguration(new PostCommentConfig());
+            
             builder.ApplyConfiguration(new UserProfileCnfig());
             builder.ApplyConfiguration(new IdentityUserLoginConfig());
             builder.ApplyConfiguration(new IdentityUserRoleConfig());

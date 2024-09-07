@@ -1,9 +1,9 @@
 ﻿using Erox.Application.Enums;
 using Erox.Application.Models;
-using Erox.Application.Posts;
+
 using Erox.Application.Wishlists.Command;
 using Erox.DataAccess;
-using Erox.Domain.Aggregates.PostAggregate;
+
 using Erox.Domain.Aggregates.WishlistAggregate;
 using MediatR;
 using Microsoft.EntityFrameworkCore;

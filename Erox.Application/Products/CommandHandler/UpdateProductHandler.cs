@@ -1,10 +1,10 @@
 ﻿using Erox.Application.Enums;
 using Erox.Application.Models;
-using Erox.Application.Posts;
+
 using Erox.Application.Products.Command;
 using Erox.DataAccess;
 using Erox.DataAccess.Migrations;
-using Erox.Domain.Aggregates.PostAggregate;
+
 using Erox.Domain.Aggregates.ProductAggregate;
 using Erox.Domain.Aggregates.Translations;
 using Erox.Domain.Exeptions;

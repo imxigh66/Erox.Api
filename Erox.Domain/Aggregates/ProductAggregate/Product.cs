@@ -1,11 +1,11 @@
 ﻿using Erox.Domain.Aggregates.CardAggregate;
 using Erox.Domain.Aggregates.OrderAggregate;
-using Erox.Domain.Aggregates.PostAggregate;
+
 using Erox.Domain.Aggregates.Translations;
 using Erox.Domain.Aggregates.UsersProfiles;
 using Erox.Domain.Aggregates.WishlistAggregate;
 using Erox.Domain.Exeptions;
-using Erox.Domain.Validators.PostValidators;
+
 using Erox.Domain.Validators.ProductValidators;
 using System;
 using System.Collections.Generic;

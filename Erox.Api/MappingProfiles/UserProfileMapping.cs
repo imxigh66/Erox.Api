@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Erox.Api.Contracts.posts.responses;
+
 using Erox.Api.Contracts.userprofile.requests;
 using Erox.Api.Contracts.userprofile.responses;
 using Erox.Application.Models;
@@ -21,12 +21,7 @@ namespace Erox.Api.MappingProfiles
             //.ConvertUsing((src, dest, context) => context.Mapper.Map<List<UserProfileResponse>>(src.Errors.ToList()));
             //CreateMap<OperationResult<UserProfiles>, UserProfileResponse>();
             CreateMap<BasicInfo, BasicInformation>();
-            CreateMap<UserProfileEntity, InteractionUser>()
-                .ForMember(dest => dest.FullName,opt
-                =>opt.MapFrom(src
-                =>src.Basicinfo.Firstname+ " " + src.Basicinfo.Lastname))
-                .ForMember(dest => dest.City, opt
-                => opt.MapFrom(src => src.Basicinfo.CurrentCity));
+            
 
 
         }

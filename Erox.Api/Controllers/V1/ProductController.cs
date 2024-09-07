@@ -1,13 +1,11 @@
 ﻿using AutoMapper;
-using Erox.Api.Contracts.posts.requests;
-using Erox.Api.Contracts.posts.responses;
+
 using Erox.Api.Contracts.product.requests;
 using Erox.Api.Contracts.product.responses;
 using Erox.Api.Extentions;
 using Erox.Api.Filters;
 using Erox.Application.Orders.Queries;
-using Erox.Application.Posts.Commands;
-using Erox.Application.Posts.Queries;
+
 using Erox.Application.Products.Command;
 using Erox.Application.Products.Queries;
 using Erox.Domain.Enumerations;

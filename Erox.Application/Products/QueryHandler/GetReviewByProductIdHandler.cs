@@ -1,7 +1,7 @@
 ﻿using Erox.Application.Models;
 using Erox.Application.Products.Queries;
 using Erox.DataAccess;
-using Erox.Domain.Aggregates.PostAggregate;
+
 using Erox.Domain.Aggregates.ProductAggregate;
 using MediatR;
 using Microsoft.EntityFrameworkCore;

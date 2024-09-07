@@ -9,15 +9,7 @@
             public const string IdRoute = "{id}";
         }
 
-        public class Post
-        {
-            public const string getById = "{id}";
-            public const string PostComments = "{postId}/comments";
-            public const string CommentById = "{postId}/comments/{commentId}";
-           
-            public const string InterectionById = "{postId}/interections/{interectionId}";
-            public const string PostInteractions = "{postid}/interactions";
-        }
+       
 
         public static class Identity
         {

@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Erox.Api.Contracts.posts.responses;
+
 using Erox.Api.Contracts.product.responses;
 using Erox.Domain.Aggregates.ProductAggregate;
 using Erox.Domain.Aggregates.Translations;
