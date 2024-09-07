@@ -78,5 +78,14 @@ namespace Erox.Api.Controllers.V1
             // Возвращаем количество пользователей
             return Ok(new { TotalUsers = userCount });
         }
+
+        [HttpGet]
+        [Route("top-clients")]
+        public async Task<IActionResult> GetTopClients([FromQuery] int topCount = 10)
+        {
+            var query = new GetTopClientsQuery(topCount);
+            var topClients = await _mediator.Send(query);
+            return Ok(topClients);
+        }
     }
 }
