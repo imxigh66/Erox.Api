@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Erox.Application.Admin.QueriesHandler;
 using Erox.Application.Admin.Query;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -15,10 +16,12 @@ namespace Erox.Api.Controllers.V1
     {
         private readonly IMediator _mediator;
         private readonly IMapper _mapper;
-        public AdminController(IMediator mediator, IMapper mapper)
+        private readonly TopSalesHandler _topSalesHandler;
+        public AdminController(IMediator mediator, IMapper mapper, TopSalesHandler topSalesHandler)
         {
             _mediator = mediator;
             _mapper = mapper;
+            _topSalesHandler = topSalesHandler;
         }
 
         [HttpGet]
@@ -37,6 +40,13 @@ namespace Erox.Api.Controllers.V1
 
             return Ok(result);
         }
-      
+
+        [HttpGet("top-selling-products")]
+        public async Task<IActionResult> GetTopSellingProducts([FromQuery] int topCount = 10)
+        {
+            var topProducts = await _topSalesHandler.GetTopSellingProductsAsync(topCount);
+            return Ok(topProducts);
+        }
+
     }
 }

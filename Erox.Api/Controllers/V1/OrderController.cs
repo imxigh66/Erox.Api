@@ -39,6 +39,10 @@ namespace Erox.Api.Controllers.V1
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "AppUser")]
         public async Task<IActionResult> AddToOrder([FromBody] CreateOrderRequest req, CancellationToken cancellationToken)
         {
+            if (req.Items == null || !req.Items.Any())
+            {
+                return BadRequest("Items cannot be null or empty");
+            }
             var userId = HttpContext.GetUserProfileIdClaimValue();
             var command = new CreateOrder() {
                 UserId= userId,
