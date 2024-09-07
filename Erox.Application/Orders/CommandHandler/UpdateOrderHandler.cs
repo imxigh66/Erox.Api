@@ -40,7 +40,7 @@ namespace Erox.Application.Orders.CommandHandler
                 }
                 order.UpdateOrder(request.Status, request.PaymentMethod, request.ShippingMethod, request.Sum, request.Address,
                     request.Items.Select(i=>new OrderItem {
-                        Color=i.Color,SizeId=i.SizeId,Quantity=i.Quantity,ProductId=i.ProductId,OrderItemId=i.OrderItemId}).ToArray());
+                        SizeId=i.SizeId,Quantity=i.Quantity,ProductId=i.ProductId,OrderItemId=i.OrderItemId}).ToArray());
                 
                 await _ctx.SaveChangesAsync(cancellationToken);
                 _result.PayLoad = order;

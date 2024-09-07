@@ -15,7 +15,7 @@ namespace Erox.Api.Contracts.orders.response
         public string Code { get; set; }
 
         public Guid ProductId { get; set; }
-  
+        public string[] Images { get; set; }
         public Guid SizeId { get; set; }
         public int Quantity { get; set; }
     }

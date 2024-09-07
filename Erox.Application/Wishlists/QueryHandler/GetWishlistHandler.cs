@@ -27,7 +27,9 @@ namespace Erox.Application.Wishlists.QueryHandler
             // Находим вишлист пользователя вместе с продуктами
             var wishlist = await _ctx.Wishlists
                 .Include(w => w.Items)
-                .ThenInclude(wi => wi.Product)  // Загружаем связанные продукты
+                .ThenInclude(wi => wi.Product).ThenInclude(i=>i.ProductNameTranslations)
+                .Include(w => w.Items)
+                .ThenInclude(wi => wi.Product).ThenInclude(i => i.Images)// Загружаем связанные продукты
                 .FirstOrDefaultAsync(w => w.UserId == request.UserId, cancellationToken);
 
             if (wishlist == null)
