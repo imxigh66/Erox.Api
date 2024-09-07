@@ -1,10 +1,13 @@
 ﻿using AutoMapper;
 using Erox.Application.Admin.QueriesHandler;
 using Erox.Application.Admin.Query;
+using Erox.DataAccess;
+using Erox.Domain.Aggregates.UsersProfiles;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Erox.Api.Controllers.V1
 {
@@ -17,11 +20,13 @@ namespace Erox.Api.Controllers.V1
         private readonly IMediator _mediator;
         private readonly IMapper _mapper;
         private readonly TopSalesHandler _topSalesHandler;
-        public AdminController(IMediator mediator, IMapper mapper, TopSalesHandler topSalesHandler)
+        private readonly DataContext _ctx;
+        public AdminController(IMediator mediator, IMapper mapper, TopSalesHandler topSalesHandler,DataContext ctx)
         {
             _mediator = mediator;
             _mapper = mapper;
             _topSalesHandler = topSalesHandler;
+            _ctx = ctx;
         }
 
         [HttpGet]
@@ -62,5 +67,16 @@ namespace Erox.Api.Controllers.V1
             return Ok(new { Revenue = revenue });
         }
 
+
+        [HttpGet]
+        [Route("countUser")]
+        public async Task<IActionResult> GetTotalUsersCount()
+        {
+            // Подсчет количества записей в таблице пользователей
+            var userCount = await _ctx.Set<UserProfileEntity>().CountAsync();
+
+            // Возвращаем количество пользователей
+            return Ok(new { TotalUsers = userCount });
+        }
     }
 }
