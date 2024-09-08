@@ -24,16 +24,16 @@ namespace Erox.Domain.Aggregates.ProductAggregate
         public Guid ProductId { get; set; }
       
       
-        public decimal Price { get; private set; }  
-        public decimal DiscountPrice { get; private set; }
-        public Guid CategoryId { get; private set; }
-        public Category Category { get; private set; }
+        public decimal Price { get; set; }  
+        public decimal DiscountPrice { get;  set; }
+        public Guid CategoryId { get;  set; }
+        public Category Category { get;  set; }
        
         public IEnumerable<ProductImages> Images {  get; set; }
-        public string Season { get; private set; }
-        public string  Code { get; private set; }
-        public DateTime CreatedDate { get; private set; }
-        public DateTime LastModified { get; private set; }
+        public string Season { get;  set; }
+        public string  Code { get;  set; }
+        public DateTime CreatedDate { get;  set; }
+        public DateTime LastModified { get;  set; }
         public IEnumerable<ProductReview> Reviews { get { return _reviews; } }
         public IEnumerable<ProductSize> Sizes {  get { return _sizes; } }
         public IEnumerable<OrderItem> OrderItems { get; set; }

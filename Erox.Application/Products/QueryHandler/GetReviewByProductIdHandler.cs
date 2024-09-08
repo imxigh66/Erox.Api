@@ -27,7 +27,8 @@ namespace Erox.Application.Products.QueryHandler
             {
                 var product = await _ctx.Products
                     .Include(p => p.Reviews)
-                    .FirstOrDefaultAsync(p => p.ProductId == request.ProductId);
+                    .FirstOrDefaultAsync(p => p.ProductId == request.ProductId)
+                    ;
 
                 result.PayLoad = product.Reviews.ToList();
             }

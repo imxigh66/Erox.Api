@@ -21,7 +21,8 @@ namespace Erox.Application.Admin.QueriesHandler
         {
             var topProducts = await _ctx.Set<OrderItem>()
     .Include(oi => oi.Product)  // Подключаем продукт для получения информации
-    .ThenInclude(p => p.ProductNameTranslations) // Подключаем переводы
+    .ThenInclude(p => p.ProductNameTranslations)
+    .Include(oi=>oi.Product).ThenInclude(i=>i.Images)// Подключаем переводы
     .ToListAsync(); // Загружаем в память
 
             // Группируем и обрабатываем данные в памяти
@@ -33,6 +34,10 @@ namespace Erox.Application.Admin.QueriesHandler
                     Code=group.First().Product.Code,
                     ProductName = group.First().Product.ProductNameTranslations
                                     .FirstOrDefault(t => t.Language == "en")?.Title ?? "No translation",
+                    Images = group.First().Product.Images
+                 .Select(t => t.Path)
+                 .FirstOrDefault() ?? "default-image-path",
+
                     TotalQuantitySold = group.Sum(oi => oi.Quantity)
                 })
                 .OrderByDescending(p => p.TotalQuantitySold)
@@ -50,6 +55,7 @@ namespace Erox.Application.Admin.QueriesHandler
         public Guid ProductId { get; set; }
         public string ProductName { get; set; }
         public string Code { get; set; }
+        public string Images {  get; set; }
         public int TotalQuantitySold { get; set; }
     }
 

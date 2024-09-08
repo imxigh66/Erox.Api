@@ -22,6 +22,7 @@ namespace Erox.Application.Admin.QueriesHandler
         {
             // Группируем заказы по пользователям и подсчитываем как количество заказов, так и общую сумму
             var topClients = await _ctx.Set<Order>()
+                .Where(o => o.Status == "Created")
                 .GroupBy(o => o.UserId)
                 .Select(group => new TopClientDto
                 {

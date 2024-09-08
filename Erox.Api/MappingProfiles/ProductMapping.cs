@@ -21,7 +21,12 @@ namespace Erox.Api.MappingProfiles
             CreateMap<ProductDescriptionTranslation, ProductTranslationResponse>()
                 .ForMember(d => d.LanguageCode, o => o.MapFrom(s => s.Language));
 
-            CreateMap<ProductReview,ProductReviewResponse>();
+            CreateMap<ProductReview,ProductReviewResponse>()
+                .ForMember(des => des.Names, opt => opt.MapFrom(src => src.Product.ProductNameTranslations))
+                .ForMember(des => des.Code, opt => opt.MapFrom(src => src.Product.Code))
+                .ForMember(des => des.UserId, opt => opt.MapFrom(src => src.UserProfieId));
+
+
             CreateMap<ProductSize, ProductSizeResponse>();
        
             CreateMap<ProductSize[], GetSizesByProductsIdResponse>()

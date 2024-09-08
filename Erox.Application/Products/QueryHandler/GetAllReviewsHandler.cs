@@ -25,7 +25,12 @@ namespace Erox.Application.Products.QueryHandler
         {
             try
             {
-                var review = await _ctx.ProductReviews.ToListAsync();
+                var review = await _ctx.ProductReviews
+           .Include(i => i.Product)
+               .ThenInclude(p => p.ProductNameTranslations)
+               
+           .ToListAsync();
+
                 _result.PayLoad = review;
             }
             catch (Exception e)

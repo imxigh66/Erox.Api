@@ -1,6 +1,7 @@
 ﻿using Erox.Application.Admin.Query;
 using Erox.DataAccess;
 using Erox.Domain.Aggregates.OrderAggregate;
+using Erox.Domain.Enumerations;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -24,7 +25,10 @@ namespace Erox.Application.Admin.QueriesHandler
             var startOfWeek = today.AddDays(-(int)today.DayOfWeek);
             var startOfMonth = new DateTime(today.Year, today.Month, 1);
 
-            var query = _ctx.Set<Order>().AsQueryable();
+            var query = _ctx.Set<Order>()
+        .Where(o => o.Status == StatusEnum.Cancelled.ToString())
+        // Показываем только заказы со статусом "Cancelled"
+        .AsQueryable();
 
             // Общее количество заказов за сегодня
             var todayCount = request.GetTodayCount

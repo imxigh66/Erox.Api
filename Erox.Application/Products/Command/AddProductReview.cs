@@ -10,6 +10,8 @@ namespace Erox.Application.Products.Command
         public string Text { get; set; }
         public bool IsApproved { get; set; }
         public Guid UserProfileId { get; set; }
-      
+        public DateTime CreatedDate { get;  set; }
+        public DateTime LastModified { get; set; }
+
     }
 }

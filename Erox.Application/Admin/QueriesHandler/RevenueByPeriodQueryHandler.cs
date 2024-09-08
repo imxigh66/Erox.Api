@@ -52,7 +52,7 @@ namespace Erox.Application.Admin.QueriesHandler
 
             // Считаем доход за выбранный период
             var totalRevenue = await _ctx.Orders
-     .Where(o => o.Status == StatusEnum.Created.ToString() && o.CreatedDate.Date >= startDate.Date && o.CreatedDate.Date <= endDate.Date)
+     .Where(o => o.Status == StatusEnum.Cancelled.ToString() && o.CreatedDate.Date >= startDate.Date && o.CreatedDate.Date <= endDate.Date)
      .SumAsync(o => o.Sum);
 
 

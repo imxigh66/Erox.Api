@@ -250,19 +250,19 @@ namespace Erox.Api.Controllers.V1
 
 
 
-        [HttpGet]
-        [Route(ApiRoutes.Product.ProductReview)]
-        [AllowAnonymous]
-        public async Task<IActionResult> GetReviewById(string productId, CancellationToken cancellationToken)
-        {
-            var query = new GetReviewByProductId() { ProductId = Guid.Parse(productId) };
-            var result = await _mediator.Send(query, cancellationToken);
+        //[HttpGet]
+        //[Route(ApiRoutes.Product.ProductReview)]
+        //[AllowAnonymous]
+        //public async Task<IActionResult> GetReviewById(string productId, CancellationToken cancellationToken)
+        //{
+        //    var query = new GetReviewByProductId() { ProductId = Guid.Parse(productId) };
+        //    var result = await _mediator.Send(query, cancellationToken);
 
-            if (result.IsError) HandleErrorResponse(result.Errors);
+        //    if (result.IsError) HandleErrorResponse(result.Errors);
 
-            var reviews = _mapper.Map<List<ProductReviewResponse>>(result.PayLoad);
-            return Ok(reviews);
-        }
+        //    var reviews = _mapper.Map<List<ProductReviewResponse>>(result.PayLoad);
+        //    return Ok(reviews);
+        //}
 
         [HttpGet]
         [Route("GetAllReviews")]

@@ -35,7 +35,7 @@ namespace Erox.DataAccess.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Cards");
+                    b.ToTable("Cards", (string)null);
                 });
 
             modelBuilder.Entity("Erox.Domain.Aggregates.CardAggregate.CardItem", b =>
@@ -64,7 +64,7 @@ namespace Erox.DataAccess.Migrations
 
                     b.HasIndex("SizeId");
 
-                    b.ToTable("CardItem");
+                    b.ToTable("CardItem", (string)null);
                 });
 
             modelBuilder.Entity("Erox.Domain.Aggregates.OrderAggregate.Order", b =>
@@ -105,7 +105,7 @@ namespace Erox.DataAccess.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Orders", t =>
+                    b.ToTable("Orders", null, t =>
                         {
                             t.HasCheckConstraint("Orders_PaymentMethods_RestrictValues", "PaymenentMethod IN ('Card', 'Cash')");
 
@@ -196,7 +196,7 @@ namespace Erox.DataAccess.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("Erox.Domain.Aggregates.ProductAggregate.ProductImages", b =>
@@ -217,7 +217,7 @@ namespace Erox.DataAccess.Migrations
                     b.HasIndex("ProductId", "Path")
                         .IsUnique();
 
-                    b.ToTable("ProductImages");
+                    b.ToTable("ProductImages", (string)null);
                 });
 
             modelBuilder.Entity("Erox.Domain.Aggregates.ProductAggregate.ProductReview", b =>
@@ -249,7 +249,7 @@ namespace Erox.DataAccess.Migrations
 
                     b.HasIndex("Productid");
 
-                    b.ToTable("ProductReviews");
+                    b.ToTable("ProductReviews", (string)null);
                 });
 
             modelBuilder.Entity("Erox.Domain.Aggregates.ProductAggregate.ProductSize", b =>
@@ -270,7 +270,7 @@ namespace Erox.DataAccess.Migrations
                     b.HasIndex("ProductId", "Size")
                         .IsUnique();
 
-                    b.ToTable("ProductSize");
+                    b.ToTable("ProductSize", (string)null);
                 });
 
             modelBuilder.Entity("Erox.Domain.Aggregates.Translations.CategoryTranslation", b =>
@@ -369,7 +369,7 @@ namespace Erox.DataAccess.Migrations
 
                     b.HasKey("UserProfileId");
 
-                    b.ToTable("UserProfiles");
+                    b.ToTable("UserProfiles", (string)null);
                 });
 
             modelBuilder.Entity("Erox.Domain.Aggregates.WishlistAggregate.Wishlist", b =>
@@ -385,7 +385,7 @@ namespace Erox.DataAccess.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Wishlists");
+                    b.ToTable("Wishlists", (string)null);
                 });
 
             modelBuilder.Entity("Erox.Domain.Aggregates.WishlistAggregate.WishlistItem", b =>
@@ -406,7 +406,7 @@ namespace Erox.DataAccess.Migrations
 
                     b.HasIndex("WishlistId");
 
-                    b.ToTable("WishlistItem");
+                    b.ToTable("WishlistItem", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -762,7 +762,7 @@ namespace Erox.DataAccess.Migrations
 
             modelBuilder.Entity("Erox.Domain.Aggregates.UsersProfiles.UserProfileEntity", b =>
                 {
-                    b.OwnsOne("Erox.Domain.Aggregates.UsersProfile.BasicInfo", "Basicinfo", b1 =>
+                    b.OwnsOne("Erox.Domain.Aggregates.UsersProfiles.UserProfileEntity.Basicinfo#Erox.Domain.Aggregates.UsersProfile.BasicInfo", "Basicinfo", b1 =>
                         {
                             b1.Property<Guid>("UserProfileEntityUserProfileId")
                                 .HasColumnType("uniqueidentifier");
@@ -792,7 +792,7 @@ namespace Erox.DataAccess.Migrations
 
                             b1.HasKey("UserProfileEntityUserProfileId");
 
-                            b1.ToTable("UserProfiles");
+                            b1.ToTable("UserProfiles", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("UserProfileEntityUserProfileId");
