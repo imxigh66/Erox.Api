@@ -25,8 +25,19 @@ namespace Erox.Application.Orders.Queryhandler
         {
             try
             {
-                var order = await _ctx.Orders.Include(o => o.Items).ToListAsync();
-                _result.PayLoad = order;
+                var orders = await _ctx.Orders
+               .Include(o => o.Items)
+                   .ThenInclude(i => i.Product) // Загрузка информации о продукте
+                   .ThenInclude(p => p.ProductNameTranslations) // Загрузка переводов для продукта
+               .Include(o => o.Items)
+                   .ThenInclude(i => i.Product)
+                   .ThenInclude(p => p.Images) // Загрузка изображений для продукта
+                .Include(o => o.Items)
+                    .ThenInclude(i => i.Size)
+                    
+               .Include(o => o.User) // Загрузка информации о пользователе
+               .ToListAsync(cancellationToken);
+                _result.PayLoad = orders;
             }
             catch (Exception e)
             {

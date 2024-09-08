@@ -9,8 +9,7 @@ namespace Erox.Api.Contracts.orders.response
         public Guid OrderId { get; set; }
 
 
-        public Guid UserId { get; set; }
-        
+        public UserInfoResponse User { get; set; }
         public StatusEnum Status { get; set; }
         public PaymentMethodEnum PaymenentMethod { get; set; }
         public ShippingMethodEnum ShippingMethod { get; set; }

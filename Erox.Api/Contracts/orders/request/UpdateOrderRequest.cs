@@ -12,6 +12,6 @@ namespace Erox.Api.Contracts.orders.request
         public decimal Sum { get; set; }
         public PaymentMethodEnum PaymentMethod { get; set; }
         public ShippingMethodEnum ShippingMethod { get; set; }
-        public string Address { get; set; }
+        public string? Address { get; set; }
     }
 }

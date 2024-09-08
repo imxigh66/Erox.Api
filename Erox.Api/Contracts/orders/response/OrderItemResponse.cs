@@ -12,11 +12,12 @@ namespace Erox.Api.Contracts.orders.response
         public decimal Price { get; set; }
         public decimal DiscountPrice { get; set; }
     
-        public string Code { get; set; }
+        public string? Code { get; set; }
 
         public Guid ProductId { get; set; }
         public string[] Images { get; set; }
-        public Guid SizeId { get; set; }
+   
+        public ProductSizeResponse Size { get; set; }
         public int Quantity { get; set; }
     }
 }

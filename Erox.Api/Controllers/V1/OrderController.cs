@@ -123,6 +123,7 @@ namespace Erox.Api.Controllers.V1
                 ShippingMethod = updatedOrder.ShippingMethod.ToString(),
                 PaymentMethod = updatedOrder.PaymentMethod.ToString(),
                 Status = updatedOrder.Status.ToString(),
+                Sum= updatedOrder.Sum,
                 Address = updatedOrder.Address,
                 OrderId = Guid.Parse(id),
                 Items=updatedOrder.Items,
