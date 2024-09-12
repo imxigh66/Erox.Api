@@ -12,29 +12,29 @@ using System.Threading.Tasks;
 
 namespace Erox.Application.Products.QueryHandler
 {
-    public class GetAllReviewsHandler : IRequestHandler<GetAllReviews, OperationResult<List<ProductReview>>>
-    {
-        private readonly DataContext _ctx;
-        private readonly OperationResult<List<ProductReview>> _result;
-        public GetAllReviewsHandler(DataContext ctx)
-        {
-            _ctx = ctx;
-            _result = new OperationResult<List<ProductReview>>();
-        }
-        public async Task<OperationResult<List<ProductReview>>> Handle(GetAllReviews request, CancellationToken cancellationToken)
-        {
-            try
-            {
-                var review = await _ctx.ProductReviews.ToListAsync();
-                _result.PayLoad = review;
-            }
-            catch (Exception e)
-            {
+    //public class GetAllReviewsHandler : IRequestHandler<GetAllReviews, OperationResult<List<ProductReview>>>
+    //{
+    //    private readonly DataContext _ctx;
+    //    private readonly OperationResult<List<ProductReview>> _result;
+    //    public GetAllReviewsHandler(DataContext ctx)
+    //    {
+    //        _ctx = ctx;
+    //        _result = new OperationResult<List<ProductReview>>();
+    //    }
+    //    public async Task<OperationResult<List<ProductReview>>> Handle(GetAllReviews request, CancellationToken cancellationToken)
+    //    {
+    //        try
+    //        {
+    //            var review = await _ctx.ProductReviews.ToListAsync();
+    //            _result.PayLoad = review;
+    //        }
+    //        catch (Exception e)
+    //        {
 
-                _result.AddUnknownError(e.Message);
+    //            _result.AddUnknownError(e.Message);
 
-            }
-            return _result;
-        }
-    }
+    //        }
+    //        return _result;
+    //    }
+    //}
 }

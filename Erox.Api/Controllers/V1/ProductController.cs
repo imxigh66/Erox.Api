@@ -150,7 +150,7 @@ namespace Erox.Api.Controllers.V1
         public async Task<IActionResult> GetAllProducts(CancellationToken cancellationToken)
         {
             var result = await _mediator.Send(new GetAllProducts(), cancellationToken);
-            var mapped = _mapper.Map<List<ProductResponce>>(result.PayLoad);
+            var mapped = _mapper.Map<List<ProductResponce>>(result.PayLoad.ToList());
             return result.IsError ? HandleErrorResponse(result.Errors) : Ok(mapped);
         }
 
