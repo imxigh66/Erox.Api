@@ -6,8 +6,7 @@ using Erox.Api.Contracts.product.responses;
 using Erox.Api.Extentions;
 using Erox.Api.Filters;
 using Erox.Application.Orders.Queries;
-using Erox.Application.Posts.Commands;
-using Erox.Application.Posts.Queries;
+
 using Erox.Application.Products.Command;
 using Erox.Application.Products.Queries;
 using Erox.Domain.Enumerations;
@@ -53,7 +52,7 @@ namespace Erox.Api.Controllers.V1
         [HttpGet]
         [Route("GetProductsByFilters")]
         [AllowAnonymous]
-        public async Task<IActionResult> GetByFilter(string? id,Guid? categoryId,string? season,string? code,decimal? price, CancellationToken cancellationToken)
+        public async Task<IActionResult> GetByFilter(string? id,Guid? categoryId,string? season,string? categoryName,string? code,decimal? price, CancellationToken cancellationToken)
         {
             Guid? productId = null;
 
@@ -71,6 +70,7 @@ namespace Erox.Api.Controllers.V1
 
             var query = new GetProductByFilter() { 
                 CategoryId=categoryId,
+                CategoryName=categoryName,
                 Season=season,
                 Code=code,
                 Price=price,

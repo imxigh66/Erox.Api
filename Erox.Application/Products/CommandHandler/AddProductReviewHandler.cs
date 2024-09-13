@@ -1,6 +1,6 @@
 ﻿using Erox.Application.Enums;
 using Erox.Application.Models;
-using Erox.Application.Posts;
+
 using Erox.Application.Products.Command;
 using Erox.DataAccess;
 using Erox.Domain.Aggregates.PostAggregate;

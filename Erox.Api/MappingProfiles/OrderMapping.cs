@@ -18,8 +18,14 @@ namespace Erox.Api.MappingProfiles
             .ForMember(dest => dest.PaymenentMethod, opt => opt.MapFrom(src => Enum.Parse<PaymentMethodEnum>(src.PaymenentMethod)))
             .ForMember(dest => dest.ShippingMethod, opt => opt.MapFrom(src => Enum.Parse<ShippingMethodEnum>(src.ShippingMethod)))
             .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src.Items))
+
             .ReverseMap();
-            CreateMap<OrderItem, OrderItemResponse>();
+            CreateMap<OrderItem, OrderItemResponse>()
+            .ForMember(dest => dest.Names, opt => opt.MapFrom(src => src.Product.ProductNameTranslations))
+            .ForMember(dest => dest.Size, opt => opt.MapFrom(src => src.Size.Size))
+            .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.Product.Price))
+            .ForMember(dest => dest.DiscountPrice, opt => opt.MapFrom(src => src.Product.DiscountPrice))
+            .ForMember(dest => dest.Code, opt => opt.MapFrom(src => src.Product.Code)); 
             
         }
     }
