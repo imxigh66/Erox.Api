@@ -51,7 +51,7 @@ namespace Erox.Api.Controllers.V1
         [HttpGet]
         [Route("GetProductsByFilters")]
         [AllowAnonymous]
-        public async Task<IActionResult> GetByFilter(string? id,Guid? categoryId,string? season,string? code,decimal? price, CancellationToken cancellationToken)
+        public async Task<IActionResult> GetByFilter(string? id,Guid? categoryId,string? season,string? categoryName,string? code,decimal? price, CancellationToken cancellationToken)
         {
             Guid? productId = null;
 
@@ -69,6 +69,7 @@ namespace Erox.Api.Controllers.V1
 
             var query = new GetProductByFilter() { 
                 CategoryId=categoryId,
+                CategoryName=categoryName,
                 Season=season,
                 Code=code,
                 Price=price,
@@ -148,7 +149,7 @@ namespace Erox.Api.Controllers.V1
         public async Task<IActionResult> GetAllProducts(CancellationToken cancellationToken)
         {
             var result = await _mediator.Send(new GetAllProducts(), cancellationToken);
-            var mapped = _mapper.Map<List<ProductResponce>>(result.PayLoad);
+            var mapped = _mapper.Map<List<ProductResponce>>(result.PayLoad.ToList());
             return result.IsError ? HandleErrorResponse(result.Errors) : Ok(mapped);
         }
 

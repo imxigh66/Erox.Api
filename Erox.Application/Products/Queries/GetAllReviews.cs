@@ -1,15 +1,16 @@
-﻿using Erox.Application.Models;
+﻿using Erox.Application.Base;
+using Erox.DataAccess;
 using Erox.Domain.Aggregates.ProductAggregate;
-using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Erox.Application.Products.Queries
 {
-    public class GetAllReviews:IRequest<OperationResult<List<ProductReview>>>
+	public class GetAllReviews: QueryBase<ProductReview>
     {
-    }
+		public class GetAllReviewsHandler : QueryBaseHandler<GetAllReviews>
+		{			
+			public GetAllReviewsHandler(DataContext ctx) : base(ctx)
+			{
+			}
+		}
+	}
 }
