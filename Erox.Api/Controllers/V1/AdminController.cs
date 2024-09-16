@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Erox.Application.Admin.QueriesHandler;
 using Erox.Application.Admin.Query;
+using Erox.Application.Enums;
 using Erox.DataAccess;
 using Erox.Domain.Aggregates.UsersProfiles;
 using MediatR;
@@ -42,7 +43,6 @@ namespace Erox.Api.Controllers.V1
             };
 
             var result = await _mediator.Send(query);
-
             return Ok(result);
         }
 
@@ -59,12 +59,10 @@ namespace Erox.Api.Controllers.V1
         public async Task<IActionResult> GetRevenueByPeriod([FromQuery] PeriodType periodType)
         {
             
-            var query = new RevenueByPeriodQuery(periodType);
-
-            
+            var query = new RevenueByPeriodQuery(periodType);            
             var revenue = await _mediator.Send(query);
 
-            return Ok(new { Revenue = revenue });
+            return Ok(new { Revenue = revenue.PayLoad.FirstOrDefault()?.Revenue ?? 0 });
         }
 
 
