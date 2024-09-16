@@ -72,7 +72,7 @@ namespace Erox.Domain.Aggregates.ProductAggregate
             throw exception;
         }
 
-        public void UpdateProducts(  decimal price, decimal discount, Guid categoryId, string season, string code)
+        public void UpdateProducts(  decimal price, decimal discount, string season, string code)
         {
             //if (string.IsNullOrWhiteSpace(newText))
             //{
@@ -85,7 +85,6 @@ namespace Erox.Domain.Aggregates.ProductAggregate
             //Description = description;
             Price = price;
             DiscountPrice = discount;
-            CategoryId = categoryId;
 
             //Image = image;
             Season = season;

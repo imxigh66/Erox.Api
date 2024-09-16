@@ -12,5 +12,6 @@ namespace Erox.Application.Identity
         public const string IncorrectPassword = "The provided password is incorrect";
         public const string IdentityUserAlreadyExists = "Provided email addres already exists.Cannot register new user";
         public const string UnauthorizedAcoountRemoval = "Cannot remove account as you are not its owner";
+        public const string NotConfirmPassword = "New password and confirmation do not match";
     }
 }

@@ -51,7 +51,7 @@ namespace Erox.Api.Controllers.V1
         [HttpGet]
         [Route("GetProductsByFilters")]
         [AllowAnonymous]
-        public async Task<IActionResult> GetByFilter(string? id,Guid? categoryId,string? season,string? categoryName,string? code,decimal? price, CancellationToken cancellationToken)
+        public async Task<IActionResult> GetByFilter(string? id,Guid? categoryId,string? season, string? categoryName,SexEnum? sex,string? code,decimal? price, CancellationToken cancellationToken)
         {
             Guid? productId = null;
 
@@ -70,7 +70,8 @@ namespace Erox.Api.Controllers.V1
             var query = new GetProductByFilter() { 
                 CategoryId=categoryId,
                 CategoryName=categoryName,
-                Season=season,
+                Sex=sex,
+                Season =season,
                 Code=code,
                 Price=price,
                 ProductId=productId
@@ -167,8 +168,7 @@ namespace Erox.Api.Controllers.V1
                 Names = updatedProduct.Names.Select(s => new ProductTranslationCreateCommand { LanguageCode = s.LanguageCode, Title = s.Title }).ToArray(),
                 Descriptions = updatedProduct.Descriptions.Select(s => new ProductTranslationCreateCommand { LanguageCode = s.LanguageCode, Title = s.Title }).ToArray(),
                 Code = updatedProduct.Code,
-               // Image = updatedProduct.Image,
-                CategoryId= updatedProduct.CategoryId,
+              
                 Season = updatedProduct.Season,
                 Price = updatedProduct.Price,
                 DiscountPrice = updatedProduct.DiscountPrice,

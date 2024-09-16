@@ -18,6 +18,7 @@ namespace Erox.Application.Enums
         IdentityRoleAssignmentFailed=205,
        IdentityUserDoesNotExist =203,
        IncorrectPassword=204,
+       NotConfirmPassword=205,
       
        PostUpdateNotPossible=300,
        PostDeleteNotPossible=301,

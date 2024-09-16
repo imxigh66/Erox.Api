@@ -39,11 +39,7 @@ namespace Erox.Application.Identity.Handlers
                     return result;
                 }
 
-                if(identityUser.Id!=request.RequestorGuid.ToString())
-                {
-                    result.AddError(Enums.ErrorCode.UnauthorizedAccountRemoval, IdentityErrorMessage.UnauthorizedAcoountRemoval);
-                    return result;  
-                }
+                
 
                 _ctx.UserProfiles.Remove(userProfile);
                 _ctx.Users.Remove(identityUser);

@@ -15,10 +15,10 @@ namespace Erox.Api.Contracts.product.requests
         [Required]
         public decimal Price { get; set; }
         public decimal DiscountPrice { get; set; }
-        [Required]
+  
+      
         public Guid CategoryId { get; set; }
-        //[Required]
-        //public IFormFile[] Images { get; set; }
+        
         [Required]
         public string Season { get; set; }
         [Required]

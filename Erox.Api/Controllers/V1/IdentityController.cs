@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 
 namespace Erox.Api.Controllers.V1
@@ -69,17 +70,17 @@ namespace Erox.Api.Controllers.V1
 
 
         [HttpDelete]
-        [Route(ApiRoutes.Identity.IdentityById)]
-        [ValidateGuid("identityUserId")]
+        [Route("DeleteAccount")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,Roles ="AppUser")]
-        public async Task<IActionResult> DeleteAccount(string identityUserId,CancellationToken cancellationToken)
+        public async Task<IActionResult> DeleteAccount(string? identityUserId, CancellationToken cancellationToken)
         {
-            var identityUserGuid=Guid.Parse(identityUserId);
-            var requestorGuid = HttpContext.GetIdentityIdClaimValue();
+            var identityUserGuid = identityUserId == null
+                                    ? HttpContext.GetIdentityIdClaimValue()
+                                    : Guid.Parse(identityUserId);
+
             var command = new RemoveAccount
             {
                 IdentityUserId = identityUserGuid,
-                RequestorGuid = requestorGuid
             };
             var result = await _mediator.Send(command, cancellationToken);
             if (result.IsError) return HandleErrorResponse(result.Errors);
@@ -130,8 +131,6 @@ namespace Erox.Api.Controllers.V1
 
 
         [HttpPatch]
-
-     
         [Route("UpdateUserProfile")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "AppUser")]
         public async Task<IActionResult> UpdateUserProfile(UserProfileCreateUpdate updateProfile, CancellationToken cancellationToken)
@@ -150,5 +149,59 @@ namespace Erox.Api.Controllers.V1
             return response.IsError ? HandleErrorResponse(response.Errors) : NoContent();
         }
 
+        [HttpPost]
+        [Route("ChangePassword")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "AppUser")]
+        public async Task<IActionResult> ChangePassword(ChangePasswordRequest changePasswordRequest, CancellationToken cancellationToken)
+        {
+            if (changePasswordRequest == null)
+            {
+                return BadRequest("Password change data is missing.");
+            }
+
+            // Получаем IdentityId из токена
+            var identityId = HttpContext.GetIdentityIdClaimValue().ToString(); // Убедитесь, что этот метод возвращает IdentityId из токена
+            if (string.IsNullOrEmpty(identityId))
+            {
+                return Unauthorized("Identity ID not found in token.");
+            }
+
+            // Маппим запрос в команду для смены пароля
+            var command = new ChangeUserPasswordCommand
+            {
+                IdentityId = Guid.Parse(identityId), // Используем IdentityId
+                CurrentPassword = changePasswordRequest.CurrentPassword,
+                NewPassword = changePasswordRequest.NewPassword,
+                ConfirmNewPassword = changePasswordRequest.ConfirmNewPassword
+            };
+
+            // Отправляем команду через MediatR
+            var response = await _mediator.Send(command, cancellationToken);
+
+            // Проверяем результат выполнения команды
+            if (response.IsError)
+            {
+                return HandleErrorResponse(response.Errors);
+            }
+
+            return NoContent();
+        }
+
+        [HttpPost]
+        [Route("Logout")]
+        public IActionResult Logout()
+        {
+            // Удаление куки 'AuthToken'
+            if (Request.Cookies["AuthToken"] != null)
+            {
+                Response.Cookies.Delete("AuthToken", new CookieOptions
+                {
+                    Path = "/",
+                    HttpOnly = true,
+                });
+            }
+
+            return Ok(new { message = "Logged out successfully" });
+        }
     }
 }

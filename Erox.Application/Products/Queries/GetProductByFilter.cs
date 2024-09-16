@@ -1,7 +1,7 @@
 ﻿using Erox.Application.Base;
 using Erox.DataAccess;
 using Erox.Domain.Aggregates.ProductAggregate;
-
+using Erox.Domain.Enumerations;
 using Microsoft.EntityFrameworkCore;
 
 namespace Erox.Application.Products.Queries
@@ -11,7 +11,8 @@ namespace Erox.Application.Products.Queries
 		public Guid? ProductId	{ get; set; }
 		public Guid? CategoryId {  get; set; }
 		public string? CategoryName { get; set; }
-		public string? Season	{ get; set; }
+		public SexEnum? Sex { get; set; }
+        public string? Season	{ get; set; }
 		public string? Code		{ get; set; }
 		public decimal? Price	{ get; set; }
 
@@ -41,12 +42,21 @@ namespace Erox.Application.Products.Queries
 					query = query.Where(o => o.CategoryId == request.CategoryId);
 				}
 
-				if(request.CategoryName != null) 
-				{
-					query = query.Where(w => w.Category.CategoryTranslations.Any(a => a.Title == request.CategoryName));
-				}
+                if (request.CategoryName != null)
+                {
+                    query = query.Where(w => w.Category.CategoryTranslations.Any(a => a.Title == request.CategoryName));
+                }
 
-				if (request.ProductId != null)
+               
+
+                if (request.Sex != null)
+                {
+                    query = query.Where(w => w.Category.Sex == request.Sex.ToString());
+                }
+
+
+
+                if (request.ProductId != null)
 				{
 					query = query.Where(o => o.ProductId == request.ProductId);
 				}

@@ -9,6 +9,7 @@ namespace Erox.Domain.Enumerations
     public enum SexEnum
     {
         Woman,
-        Man
+        Man,
+        none
     }
 }
